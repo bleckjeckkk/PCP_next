@@ -1,0 +1,16 @@
+{
+  "name": "PCP_next",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@material-ui/core": "^1.5.0",
+    "next": "^6.1.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "typeface-roboto": "^0.0.54"
+  },
+  "scripts": {
+    "dev": "next"
+  }
+}
