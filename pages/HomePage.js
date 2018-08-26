@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Layout from '../components/Layout';
-//import '../../../node_modules/materialize-css/dist/css/materialize.css';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';

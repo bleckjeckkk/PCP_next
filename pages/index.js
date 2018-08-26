@@ -28,36 +28,35 @@ class Index extends Component {
     render() {
         return (
         <Layout>
-            <div class="column">
-                <div class="row">
+            <div className="column">
+                <div className="row">
                     <h1>PRICE CHECKER PROGRAM</h1>
                 </div>
-                <div class="row" flexGrow={1}>
-
-                <Card>
-                    <div style={{width : 750}}>
-                    <CardContent>
-                        <div class="row" horizontal='center' vertical='center' flexGrow={1}>
-                            <div class="column">
-                                <TextField
-                                id="name"
-                                label="Product"
-                                value={this.state.text}
-                                onChange={this.onChange.bind(this)}
-                                margin="normal"
-                                />
+                <div className="row">
+                    <Card>
+                        <div style={{width : 750}}>
+                        <CardContent>
+                            <div className="row" horizontal='center' vertical='center'>
+                                <div className="column">
+                                    <TextField
+                                    id="name"
+                                    label="Product"
+                                    value={this.state.text}
+                                    onChange={this.onChange.bind(this)}
+                                    margin="normal"
+                                    />
+                                </div>
+                                <div className="column">
+                                    <Button variant="contained" onClick={this.handleClick.bind(this)}>Search</Button>
+                                </div>
                             </div>
-                            <div class="column">
-                                <Button variant="contained" onClick={this.handleClick.bind(this)}>Search</Button>
-                            </div>
+                        </CardContent>
                         </div>
-                    </CardContent>
-                    </div>
-                </Card>
+                    </Card>
                 </div>
             </div>
             
-            <div class="container">
+            <div className="container">
                 <p>Search string: {this.state.text}</p>
             </div>
         </Layout>
