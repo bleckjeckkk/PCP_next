@@ -12,11 +12,19 @@ class Index extends Component {
         super(props)
         this.state = {
             text : '',
+            prevText : '',
         };
+    }
+
+
+    componentDidMount(){
+        const data = localStorage.getItem('key');
+        this.setState({ text : data});
     }
 
     handleClick(){
         console.log("Button clicked");
+        localStorage.setItem('key', event.target.value);
     }
 
     onChange(event){
