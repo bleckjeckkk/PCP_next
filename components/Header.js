@@ -17,6 +17,9 @@ const Header = () => (
                 <Link href="/about">
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>About</Button>
                 </Link>
+                <Link href="/admin/adminHome">
+                    <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>About</Button>
+                </Link>
             </Grid>
             <Grid>
                 <Link href="/login">
