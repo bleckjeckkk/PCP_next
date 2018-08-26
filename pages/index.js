@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { Typography, Grid, Paper } from '@material-ui/core';
 
 class Index extends Component {
     constructor(props){
@@ -28,34 +29,48 @@ class Index extends Component {
     render() {
         return (
         <Layout>
-            <div className="column">
-                <div className="row">
-                    <h1>PRICE CHECKER PROGRAM</h1>
-                </div>
-                <div className="row">
-                    <Card>
-                        <div style={{width : 750}}>
-                        <CardContent>
-                            <div className="row" horizontal='center' vertical='center'>
-                                <div className="column">
-                                    <TextField
-                                    id="name"
-                                    label="Product"
-                                    value={this.state.text}
-                                    onChange={this.onChange.bind(this)}
-                                    margin="normal"
-                                    />
-                                </div>
-                                <div className="column">
-                                    <Button variant="contained" onClick={this.handleClick.bind(this)}>Search</Button>
-                                </div>
-                            </div>
-                        </CardContent>
-                        </div>
-                    </Card>
-                </div>
-            </div>
-            
+            <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="stretch"
+                spacing={40}
+                >
+                <Grid item md={12}>
+                    <Typography variant="display3" style={{textAlign : 'center'}}>
+                        PRICE CHEKER PROGRAM
+                    </Typography>
+                </Grid>
+                <Grid item md={12}>
+                    <Paper style={{padding : 20}}>
+                        <Grid container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                            spacing={16}
+                            >
+                            <Grid item md = {2}>
+                            </Grid>
+                            <Grid item md = {7}>
+                                <TextField
+                                id="name"
+                                label="Product"
+                                value={this.state.text}
+                                onChange={this.onChange.bind(this)}
+                                margin="normal"
+                                fullWidth
+                                />
+                            </Grid>
+                            <Grid item md = {1}>
+                                <Button variant="contained" onClick={this.handleClick.bind(this)}>Search</Button>
+                            </Grid>
+                            <Grid item md = {2}>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Grid>
+            </Grid>
+
             <div className="container">
                 <p>Search string: {this.state.text}</p>
             </div>
