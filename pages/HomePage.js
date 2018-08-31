@@ -14,14 +14,8 @@ class HomePage extends Component {
         };
     }
 
-    componentDidMount(){
-        const searchString = localStorage.getItem('key');
-        this.setState({ text : searchString });
-    }
-
     handleClick(){
         console.log("Button clicked");
-        localStorage.setItem('key', this.state.text);
     }
 
     onChange(event){
@@ -29,7 +23,6 @@ class HomePage extends Component {
         this.setState({
             text : event.target.value,
         });
-        localStorage.setItem('key', event.target.value);
     }
 
     render() {

@@ -24,7 +24,7 @@ class Index extends Component {
 
     handleClick(){
         console.log("Button clicked");
-        localStorage.setItem('key', event.target.value);
+        localStorage.setItem('key', this.state.text);
     }
 
     onChange(event){

@@ -41496,7 +41496,7 @@ function (_Component) {
     key: "handleClick",
     value: function handleClick() {
       console.log("Button clicked");
-      localStorage.setItem('key', event.target.value);
+      localStorage.setItem('key', this.state.text);
     }
   }, {
     key: "onChange",
