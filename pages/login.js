@@ -7,8 +7,15 @@ import React, { Component } from 'react';
 
 import Layout from '../components/Layout'
 
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { 
+    Paper, 
+    Typography,
+    TextField,
+    Button,
+    Card,
+    CardContent,
+    Grid 
+} from '@material-ui/core';
 
 class Login extends Component {
     constructor(props){
@@ -104,115 +111,121 @@ class Login extends Component {
     render() {
         return (
         <Layout>
-            <div class="container">
-                <div class="column">
-                    <div class="row" horizontal='start'>
-                        <div class="card">
-                        <div style={{width : 750}}>
-                        <div class="cardcontent">
-                            <div class="row" vertical='center' horizontal="space-around" flexGrow={1} >
-                                <div class="column">
-                                    <div class="column">
-                                        <TextField
-                                            id="login_username"
-                                            label="User Name"
-                                            value={this.state.login_username}
-                                            onChange={this.onChange.bind(this)}
-                                            margin="normal"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="column">
-                                        <TextField
-                                            id="login_password"
-                                            label="Password"
-                                            value={this.state.login_password}
-                                            onChange={this.onChange.bind(this)}
-                                            margin="normal"
-                                            type="password"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    {/* <Link to={this.state.adminRoute}> */}
-                                        <Button variant="contained" onClick={this.login.bind(this)} onPointerEnter={this.auth.bind(this)}>Login</Button>
-                                    {/* </Link> */}
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                        </div>
-                    </div>
-
-                    <div class="row" horizontal='around' flexGrow={1}>
-                        <div class="column" flexGrow={.5}>
-                            <div>
-                                
-                            </div>
-                        </div>
-                        
-                        <div class="column" flexGrow={.5} horizontal='center'>
-                            <div class="row">   
-                            <div>
-                            <div class="card">
-                                <div class="cardcontent">
-                                        <div class="row" flexGrow={1}>
-                                            <h1>Sign Up</h1>
-                                        </div>
-                                        <div class="row" flexGrow={1}>
-                                            <div>
-                                                <TextField
-                                                    id="fName"
-                                                    label="First Name"
-                                                    value={this.state.fName}
-                                                    onChange={this.onChange.bind(this)}
-                                                    margin="normal"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div class="row" flexGrow={1}>
-                                            <div>
-                                                <TextField
-                                                    id="lName"
-                                                    label="Last Name"
-                                                    value={this.state.lName}
-                                                    onChange={this.onChange.bind(this)}
-                                                    margin="normal"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div class="row" flexGrow={1}>
-                                        <div>
-                                        <TextField
-                                            id="signin_username"
-                                            label="User Name"
-                                            value={this.state.signin_username}
-                                            onChange={this.onChange.bind(this)}
-                                            margin="normal"
-                                        />
-                                        </div>
-                                        </div>
-                                        <div class="row" flexGrow={1}>
-                                        <TextField
-                                            id="signin_password"
-                                            label="Password"
-                                            value={this.state.signin_password}
-                                            onChange={this.onChange.bind(this)}
-                                            margin="normal"
-                                            type="password"
-                                        />
-                                        </div>
-                                        <Button variant="contained" onClick={this.signup.bind(this)}>Signup</Button>
-                                </div>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            <Grid
+                container
+                direction="column"
+                justify="flex-start"
+                alignItems="stretch"
+                >
+                {/*Login form*/}
+                <Grid item xs={12}>
+                    <Paper style={{padding: 20}}>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="flex-start"
+                            alignItems="center"
+                            spacing={16}
+                        >
+                            <Grid item>
+                                <TextField
+                                    id="login_username"
+                                    label="User Name"
+                                    value={this.state.login_username}
+                                    onChange={this.onChange.bind(this)}
+                                    margin="normal"
+                                />
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    id="login_password"
+                                    label="Password"
+                                    value={this.state.login_password}
+                                    onChange={this.onChange.bind(this)}
+                                    margin="normal"
+                                    type="password"
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Button variant="contained" onClick={this.login.bind(this)} onPointerEnter={this.auth.bind(this)}>Login</Button> 
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Grid>
+                {/*Sign Up form*/}
+                <Grid 
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="center"
+                    style={{ padding : 20 }}>
+                    <Grid item xs = {6}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                            > 
+                            picture of a shopping cart here
+                        </Grid>
+                    </Grid>
+                    <Grid item xs = {6}>
+                        <Paper style={{padding : 20}}>
+                            <Grid 
+                                container
+                                direction="column"
+                                justify="center"
+                                alignItems="center"
+                                spacing={8}
+                            >
+                                <Typography variant="display2">
+                                    Sign Up
+                                </Typography>
+                                <Grid item>
+                                    <TextField
+                                        id="fName"
+                                        label="First Name"
+                                        value={this.state.fName}
+                                        onChange={this.onChange.bind(this)}
+                                        margin="normal"
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        id="lName"
+                                        label="Last Name"
+                                        value={this.state.lName}
+                                        onChange={this.onChange.bind(this)}
+                                        margin="normal"
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        id="signin_username"
+                                        label="User Name"
+                                        value={this.state.signin_username}
+                                        onChange={this.onChange.bind(this)}
+                                        margin="normal"
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <TextField
+                                        id="signin_password"
+                                        label="Password"
+                                        value={this.state.signin_password}
+                                        onChange={this.onChange.bind(this)}
+                                        margin="normal"
+                                        type="password"
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <Button variant="contained" onClick={this.signup.bind(this)}>Register</Button>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Layout>
         );
     }

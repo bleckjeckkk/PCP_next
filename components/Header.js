@@ -1,4 +1,4 @@
-
+import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
@@ -10,18 +10,21 @@ const Header = () => (
             justify="space-between"
             alignItems="center"
         >
-            <Grid item={6}>
-                <a href="/">
+            <Grid>
+                <Link href="/">
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Home</Button>
-                </a>
-                <a href="/about">
+                </Link>
+                <Link href="/about">
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>About</Button>
-                </a>
+                </Link>
+                <Link href="/admin/adminHome">
+                    <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>About</Button>
+                </Link>
             </Grid>
-            <Grid item={6}>
-                <a href="/login">
+            <Grid>
+                <Link href="/login">
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Login/Logout</Button>
-                </a>
+                </Link>
             </Grid>
         </Grid>
     </div>
@@ -29,7 +32,7 @@ const Header = () => (
 
 const divStyle = {
     all : {
-      height : 50,
+      height : 38,
       backgroundColor : '#000000',
       padding : 10,
     },
