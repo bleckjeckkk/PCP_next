@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-
-// import {
-//     Redirect,
-//     Link
-//   } from 'react-router-dom'
-
 import Layout from '../components/Layout'
 
 import { 
@@ -40,25 +34,17 @@ class Login extends Component {
 
     getMaxID(){
         console.log("getMaxID");
-        // fetch('http://localhost:4000/users/getCount')
-        // .then(response => response.json())
-        // .then(json => console.log(json));
-        //depending on the console.log, 
-        //update state.lastUserID by adding the result of getCount by 1
+        fetch('http://localhost:4000/users/getCount')
+        .then(response => response.json())
+        .then(json => {
+            const next = json.data[0].count + 1;
+            this.setState({ lastUserID : next});
+        });
     }
 
     onChange(event){
-        switch(event.target.id){
-            case 'login_username' : this.setState({ login_username : event.target.value}); break;
-            case 'login_password' : this.setState({ login_password : event.target.value}); break;
-            case 'signin_username' : this.setState({ signin_username : event.target.value}); break;
-            case 'signin_password' : this.setState({ signin_password : event.target.value}); break;
-            case 'fName' : this.setState({ fName : event.target.value}); break;
-            case 'lName' : this.setState({ lName : event.target.value}); break;
-            default : console.log("this wasn't supposed to happen."); break;
-        }
+        this.setState({ [event.target.id] : event.target.value });
         this.setState({willAuth : true})
-        console.log(event.target);
     }
 
     auth(){

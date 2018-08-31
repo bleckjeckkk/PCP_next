@@ -162,7 +162,7 @@ var Header = function Header() {
       fileName: _jsxFileName,
       lineNumber: 21
     }
-  }, "About"))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__material_ui_core_Grid___default.a, {
+  }, "Admin Home"))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__material_ui_core_Grid___default.a, {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 24
