@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import Layout from '../components/Layout'
-
+import Link from 'next/link'
 import { 
     Paper, 
     Typography,
@@ -9,7 +9,7 @@ import {
     Card,
     CardContent,
     Grid 
-} from '@material-ui/core';
+} from '@material-ui/core'
 
 class Login extends Component {
     constructor(props){
@@ -56,7 +56,7 @@ class Login extends Component {
             if(credentials.username === "admin"){
                 console.log("---admin---");
                 this.setState({
-                    adminRoute: '/admin/home',
+                    adminRoute: '/admin/adminHome',
                 })
             }else{
                 console.log("---not admin---");
@@ -133,7 +133,9 @@ class Login extends Component {
                                 />
                             </Grid>
                             <Grid item>
-                                <Button variant="contained" onClick={this.login.bind(this)} onPointerEnter={this.auth.bind(this)}>Login</Button> 
+                                <Link href={this.state.adminRoute}>
+                                    <Button variant="contained" onClick={this.login.bind(this)} onPointerEnter={this.auth.bind(this)}>Login</Button> 
+                                </Link>
                             </Grid>
                         </Grid>
                     </Paper>
