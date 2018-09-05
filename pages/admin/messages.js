@@ -24,11 +24,21 @@ class Messages extends Component{
         }
     }
 
-    handleClickOpen = () => {
-        this.setState({ confirmationModal: true });
+    handleClickOpen = (feedbackID) => {
+        console.log("Modal opened!");
+        console.log("feedback ID:" + feedbackID);
+        this.setState({ 
+            confirmationModal: true,
+            selectedID : feedbackID,
+        });
     };
     
     handleClose = () => {
+        this.setState({ confirmationModal: false });
+    };
+
+    deleteMessage = () => {
+        console.log("deleteMessage");
         this.setState({ confirmationModal: false });
     };
 
@@ -68,7 +78,7 @@ class Messages extends Component{
                                         {feedback.productName}
                                     </TableCell>
                                     <TableCell>
-                                        <Button color="secondary" onClick={this.handleClickOpen.bind(this)}>X</Button>
+                                        <Button color="secondary" onClick={() => this.handleClickOpen(feedback.feedbackID)}>X</Button>
                                     </TableCell>
                                 </TableRow>
                             )
@@ -84,16 +94,15 @@ class Messages extends Component{
                     <DialogTitle id="alert-dialog-title">{"Delete this message?"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                        Let Google help apps determine location. This means sending anonymous location data to
-                        Google, even when no apps are running.
+                            Are you sure you want to delete this message?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
-                        No
+                            No
                         </Button>
-                        <Button onClick={this.handleClose} color="primary" autoFocus>
-                        Yes
+                        <Button onClick={this.deleteMessage.bind(this)} color="secondary" autoFocus>
+                            Yes
                         </Button>
                     </DialogActions>
                 </Dialog>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Layout from '../components/Layout'
 import Link from 'next/link'
+import Router from 'next/router'
 import { 
     Paper, 
     Typography,
@@ -30,10 +31,11 @@ class Login extends Component {
             open : false,
             isAdmin : false,
             auth : false,
+            snackbarMessage : 'hello world!',
         };
     }
 
-    componentWillMount(){
+    componentDidMount(){
         console.log("componentWillMount");
         this.getMaxID();
     }
@@ -54,6 +56,10 @@ class Login extends Component {
     }
 
     auth(){
+        this.setState({ 
+            open : true,
+            snackbarMessage : 'Logging in...',
+        });
         console.log("auth");
 
         const credentials = { username : this.state.login_username , password : this.state.login_password };
@@ -66,16 +72,28 @@ class Login extends Component {
             if(response.auth){
                 if(response.admin){
                     console.log("---admin---");
-                    this.setState({
-                        adminRoute: '/admin/adminHome',
-                        isAdmin : true,
-                    })
+                    const info = {
+                        admin : true,
+                        auth : true,
+                        user : response.user,
+                     }
+                    window.sessionStorage.setItem("info", JSON.stringify(info));
+                    Router.push('/admin/adminHome');
                 }else{
                     console.log("---not admin---");
-                    this.setState({
-                        adminRoute: '',
-                    })
+                    const info = {
+                        admin : false,
+                        auth : true,
+                        user : response.user,
+                     }
+                    window.sessionStorage.setItem("info", JSON.stringify(info));
+                    Router.push('/userAccount');
                 }
+            }else{
+                this.setState({ 
+                    open : true,
+                    snackbarMessage : 'Error! Incorrect username/password.',
+                });
             }
         })
         .catch(err => console.error(err))
@@ -163,7 +181,7 @@ class Login extends Component {
                                 />
                             </Grid>
                             <Grid item>
-                                    <Button variant="contained" onClick={this.login.bind(this)} onPointerEnter={this.auth.bind(this)}>Login</Button> 
+                                    <Button variant="contained" onClick={this.auth.bind(this)}>Login</Button> 
                             </Grid>
                         </Grid>
                     </Paper>
@@ -253,19 +271,16 @@ class Login extends Component {
                 ContentProps={{
                     'aria-describedby': 'message-id',
                 }}
-                message={<span id="message-id">Logged in!</span>}
+                message={<span id="message-id">{this.state.snackbarMessage}</span>}
                 action={[
-                    <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
-                    UNDO
-                    </Button>,
-                    <IconButton
+                    <Button
                         key="close"
                         aria-label="Close"
                         color="inherit"
                         onClick={this.handleClose}
                     >
                         CLOSE
-                    </IconButton>,
+                    </Button>,
                 ]}
             />
         </Layout>

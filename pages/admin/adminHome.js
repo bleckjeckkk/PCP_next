@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AdminLayout from '../../components/AdminLayout';
 import { Typography } from '@material-ui/core';
 
-const poem = () => (
+const poem = (
 <pre>{`
     I walked under the rising sun
     Sea breeze - salty and fresh

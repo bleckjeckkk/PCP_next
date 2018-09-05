@@ -7,19 +7,27 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Typography, Grid, Paper } from '@material-ui/core';
 
+import Router from 'next/router'
+
 class Index extends Component {
     constructor(props){
         super(props)
         this.state = {
             text : '',
             prevText : '',
+            user : { user : {}}
         };
     }
 
 
     componentDidMount(){
-        const data = localStorage.getItem('key');
-        this.setState({ text : data });
+        var user = window.sessionStorage.getItem('info');
+        if (user === null){
+            user = { user : {}}
+        }else{
+            user = JSON.parse(user)
+        }
+        this.setState({ user });
     }
 
     handleClick(){
@@ -36,7 +44,7 @@ class Index extends Component {
 
     render() {
         return (
-        <Layout>
+        <Layout user={this.state.user.user}>
             <Grid
                 container
                 direction="column"
@@ -46,7 +54,7 @@ class Index extends Component {
                 >
                 <Grid item md={12}>
                     <Typography variant="display3" style={{textAlign : 'center'}}>
-                        PRICE CHEKER PROGRAM
+                        PRICE CHECKER PROGRAM
                     </Typography>
                 </Grid>
                 <Grid item md={12}>

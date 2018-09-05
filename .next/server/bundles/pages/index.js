@@ -90,7 +90,7 @@ var _jsxFileName = "C:\\PCP_next\\components\\Header.js";
 
 
 
-var Header = function Header() {
+var Header = function Header(props) {
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
     style: divStyle.all,
     __source: {
@@ -147,35 +147,17 @@ var Header = function Header() {
       fileName: _jsxFileName,
       lineNumber: 18
     }
-  }, "About")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_next_link___default.a, {
-    href: "/admin/adminHome",
-    prefetch: true,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 20
-    }
-  }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__material_ui_core_Button___default.a, {
-    color: "inherit",
-    variant: "outlined",
-    style: {
-      backgroundColor: '#999999',
-      color: 'white'
-    },
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 21
-    }
-  }, "Admin Home"))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__material_ui_core_Grid___default.a, {
+  }, "About"))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__material_ui_core_Grid___default.a, {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 24
     }
-  }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_next_link___default.a, {
-    href: "/login",
+  }, props.user != {} ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_next_link___default.a, {
+    href: "/userAccount",
     prefetch: true,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 25
+      lineNumber: 26
     }
   }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__material_ui_core_Button___default.a, {
     color: "inherit",
@@ -186,7 +168,25 @@ var Header = function Header() {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 26
+      lineNumber: 27
+    }
+  }, props.user.userName)) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_next_link___default.a, {
+    href: "/login",
+    prefetch: true,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 30
+    }
+  }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__material_ui_core_Button___default.a, {
+    color: "inherit",
+    variant: "outlined",
+    style: {
+      backgroundColor: '#999999',
+      color: 'white'
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 31
     }
   }, "Login/Logout")))));
 };
@@ -224,6 +224,7 @@ var Layout = function Layout(props) {
       lineNumber: 9
     }
   }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Header__["a" /* default */], {
+    user: props.user,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 10
@@ -259,6 +260,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__material_ui_core_CardContent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__material_ui_core_CardContent__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__material_ui_core__ = __webpack_require__("@material-ui/core");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__material_ui_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_next_router__ = __webpack_require__("next/router");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_next_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_next_router__);
 var _jsxFileName = "C:\\PCP_next\\pages\\index.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -283,6 +286,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var Index =
 /*#__PURE__*/
 function (_Component) {
@@ -296,7 +300,10 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
     _this.state = {
       text: '',
-      prevText: ''
+      prevText: '',
+      user: {
+        user: {}
+      }
     };
     return _this;
   }
@@ -304,9 +311,18 @@ function (_Component) {
   _createClass(Index, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var data = localStorage.getItem('key');
+      var user = window.sessionStorage.getItem('info');
+
+      if (user === null) {
+        user = {
+          user: {}
+        };
+      } else {
+        user = JSON.parse(user);
+      }
+
       this.setState({
-        text: data
+        user: user
       });
     }
   }, {
@@ -327,9 +343,10 @@ function (_Component) {
     key: "render",
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_Layout__["a" /* default */], {
+        user: this.state.user.user,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 39
+          lineNumber: 47
         }
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Grid"], {
         container: true,
@@ -339,14 +356,14 @@ function (_Component) {
         spacing: 40,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 40
+          lineNumber: 48
         }
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Grid"], {
         item: true,
         md: 12,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 47
+          lineNumber: 55
         }
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Typography"], {
         variant: "display3",
@@ -355,14 +372,14 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 48
+          lineNumber: 56
         }
-      }, "PRICE CHEKER PROGRAM")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Grid"], {
+      }, "PRICE CHECKER PROGRAM")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Grid"], {
         item: true,
         md: 12,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 52
+          lineNumber: 60
         }
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Paper"], {
         style: {
@@ -370,7 +387,7 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 53
+          lineNumber: 61
         }
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Grid"], {
         container: true,
@@ -380,21 +397,21 @@ function (_Component) {
         spacing: 16,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 54
+          lineNumber: 62
         }
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Grid"], {
         item: true,
         md: 2,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 60
+          lineNumber: 68
         }
       }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Grid"], {
         item: true,
         md: 7,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 62
+          lineNumber: 70
         }
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__material_ui_core_TextField___default.a, {
         id: "name",
@@ -405,28 +422,28 @@ function (_Component) {
         fullWidth: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 63
+          lineNumber: 71
         }
       })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Grid"], {
         item: true,
         md: 1,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 72
+          lineNumber: 80
         }
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__material_ui_core_Button___default.a, {
         variant: "contained",
         onClick: this.handleClick.bind(this),
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 73
+          lineNumber: 81
         }
       }, "Search")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["Grid"], {
         item: true,
         md: 2,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 75
+          lineNumber: 83
         }
       }))))));
     }
@@ -493,6 +510,13 @@ module.exports = require("@material-ui/core/TextField");
 /***/ (function(module, exports) {
 
 module.exports = require("next/link");
+
+/***/ }),
+
+/***/ "next/router":
+/***/ (function(module, exports) {
+
+module.exports = require("next/router");
 
 /***/ }),
 

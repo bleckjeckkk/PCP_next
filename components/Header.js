@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
-const Header = () => (
+const Header = (props) => (
     <div style={divStyle.all}>
         <Grid
             container
@@ -17,14 +17,21 @@ const Header = () => (
                 <Link href="/about" prefetch>
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>About</Button>
                 </Link>
-                <Link href="/admin/adminHome" prefetch>
+                {/* <Link href="/admin/adminHome" prefetch>
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Admin Home</Button>
-                </Link>
+                </Link> */}
             </Grid>
             <Grid>
-                <Link href="/login" prefetch>
-                    <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Login/Logout</Button>
-                </Link>
+                {props.user != {} ? (
+                    <Link href="/userAccount" prefetch>
+                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>{props.user.userName}</Button>
+                    </Link>
+                    ):(
+                    <Link href="/login" prefetch>
+                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Login/Logout</Button>
+                    </Link>
+                    )
+                }
             </Grid>
         </Grid>
     </div>

@@ -2,6 +2,13 @@ import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
+import Router from 'next/router'
+
+function logout(){
+    const info = {};
+    window.sessionStorage.setItem("info", JSON.stringify(info));
+    Router.push('/login');
+}
 
 const AdminSidebar = () => (
         <Paper style= {{padding : 20}}>
@@ -48,11 +55,16 @@ const AdminSidebar = () => (
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/login" prefetch>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
-                            Logout
-                        </Button>
-                    </Link>
+                    <Button onClick={() => {
+                            const info = {};
+                            window.sessionStorage.setItem("info", JSON.stringify(info));
+                            Router.push('/login');
+                            }}
+                            color="inherit" 
+                            variant='outlined' 
+                            style={{backgroundColor : '#999999', color : 'white' }}>
+                        Logout
+                    </Button>
                 </Grid>
             </Grid>
         </Paper>
