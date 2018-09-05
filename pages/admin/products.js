@@ -16,6 +16,10 @@ class Products extends Component{
         .then(json => {
             console.log(json.data);
             this.setState({ products : json.data });
+            localStorage.setItem('products', JSON.stringify(json.data));
+            const data = JSON.parse(localStorage.getItem('products'));
+            console.log("From localStorge");
+            console.log(data);
         });
     }
 
@@ -54,7 +58,7 @@ class Products extends Component{
                                         {products.supermarketName}
                                     </TableCell>
                                     <TableCell>
-                                        X
+                                        EDIT | X
                                     </TableCell>
                                 </TableRow>
                             )

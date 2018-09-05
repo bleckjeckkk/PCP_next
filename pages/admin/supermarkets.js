@@ -46,7 +46,7 @@ class Supermarkets extends Component{
                                         {sm.supermarketAddress}
                                     </TableCell>
                                     <TableCell>
-                                        X
+                                        EDIT | X
                                     </TableCell>
                                 </TableRow>
                             )

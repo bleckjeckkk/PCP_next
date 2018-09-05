@@ -19,7 +19,7 @@ class Index extends Component {
 
     componentDidMount(){
         const data = localStorage.getItem('key');
-        this.setState({ text : data});
+        this.setState({ text : data });
     }
 
     handleClick(){

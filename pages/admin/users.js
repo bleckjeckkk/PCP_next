@@ -47,7 +47,7 @@ class Users extends Component{
                                         {usr.lastName}
                                     </TableCell>
                                     <TableCell>
-                                        X
+                                        EDIT | X
                                     </TableCell>
                                 </TableRow>
                             )
