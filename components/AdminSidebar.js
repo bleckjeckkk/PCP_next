@@ -13,42 +13,42 @@ const AdminSidebar = () => (
                 spacing = {16}
                 >
                 <Grid item>
-                    <Link href="/admin/adminHome">
+                    <Link href="/admin/adminHome" prefetch>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Administrator Page
                         </Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/admin/messages">
+                    <Link href="/admin/messages" prefetch>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Messages
                         </Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/admin/supermarkets">
+                    <Link href="/admin/supermarkets" prefetch>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Manage Supermarkets
                         </Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/admin/products">
+                    <Link href="/admin/products" prefetch>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Manage Products
                         </Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/admin/users">
+                    <Link href="/admin/users" prefetch>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Manage Users
                         </Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/login">
+                    <Link href="/login" prefetch>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Logout
                         </Button>

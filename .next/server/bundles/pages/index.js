@@ -113,6 +113,7 @@ var Header = function Header() {
     }
   }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_next_link___default.a, {
     href: "/",
+    prefetch: true,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 14
@@ -130,6 +131,7 @@ var Header = function Header() {
     }
   }, "Home")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_next_link___default.a, {
     href: "/about",
+    prefetch: true,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 17
@@ -147,6 +149,7 @@ var Header = function Header() {
     }
   }, "About")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_next_link___default.a, {
     href: "/admin/adminHome",
+    prefetch: true,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 20
@@ -169,6 +172,7 @@ var Header = function Header() {
     }
   }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_next_link___default.a, {
     href: "/login",
+    prefetch: true,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 25
@@ -424,18 +428,7 @@ function (_Component) {
           fileName: _jsxFileName,
           lineNumber: 75
         }
-      }))))), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-        className: "container",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 82
-        }
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("p", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 83
-        }
-      }, "Search string: ", this.state.text)));
+      }))))));
     }
   }]);
 

@@ -11,18 +11,18 @@ const Header = () => (
             alignItems="center"
         >
             <Grid>
-                <Link href="/">
+                <Link href="/" prefetch>
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Home</Button>
                 </Link>
-                <Link href="/about">
+                <Link href="/about" prefetch>
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>About</Button>
                 </Link>
-                <Link href="/admin/adminHome">
+                <Link href="/admin/adminHome" prefetch>
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Admin Home</Button>
                 </Link>
             </Grid>
             <Grid>
-                <Link href="/login">
+                <Link href="/login" prefetch>
                     <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Login/Logout</Button>
                 </Link>
             </Grid>

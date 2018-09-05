@@ -19,7 +19,7 @@ class Index extends Component {
 
     componentDidMount(){
         const data = localStorage.getItem('key');
-        this.setState({ text : data});
+        this.setState({ text : data });
     }
 
     handleClick(){
@@ -78,10 +78,6 @@ class Index extends Component {
                     </Paper>
                 </Grid>
             </Grid>
-
-            <div className="container">
-                <p>Search string: {this.state.text}</p>
-            </div>
         </Layout>
         );
     }
