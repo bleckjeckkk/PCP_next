@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import AdminLayout from '../../components/AdminLayout';
-import { Typography, Table, TableHead, TableCell, TableRow, TableBody, Tooltip } from '@material-ui/core';
+import React, { Component } from 'react'
+import AdminLayout from '../../components/AdminLayout'
+import { Typography, Table, TableHead, TableCell, TableRow, TableBody, Tooltip } from '@material-ui/core'
+
 
 class Users extends Component{
     constructor(props){

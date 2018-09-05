@@ -8,7 +8,9 @@ import {
     Button,
     Card,
     CardContent,
-    Grid 
+    Grid,
+    Snackbar,
+    IconButton,
 } from '@material-ui/core'
 
 class Login extends Component {
@@ -22,8 +24,12 @@ class Login extends Component {
             login_password : '',
             signin_password : '',
             adminRoute: '',
+            adminRoute: '',
             willAuth: false,
             lastUserID : -1,
+            open : false,
+            isAdmin : false,
+            auth : false,
         };
     }
 
@@ -52,22 +58,27 @@ class Login extends Component {
 
         const credentials = { username : this.state.login_username , password : this.state.login_password };
 
-        if(this.state.willAuth){
-            if(credentials.username === "admin"){
-                console.log("---admin---");
-                this.setState({
-                    adminRoute: '/admin/adminHome',
-                })
-            }else{
-                console.log("---not admin---");
-                this.setState({
-                    adminRoute: '',
-                })
-            }
-            this.setState({willAuth : false});
-        }
-
         console.log(credentials);
+        fetch(`http://localhost:4000/users/auth?userName=${credentials.username}&userPassword=${credentials.password}`)
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            if(response.auth){
+                if(response.admin){
+                    console.log("---admin---");
+                    this.setState({
+                        adminRoute: '/admin/adminHome',
+                        isAdmin : true,
+                    })
+                }else{
+                    console.log("---not admin---");
+                    this.setState({
+                        adminRoute: '',
+                    })
+                }
+            }
+        })
+        .catch(err => console.error(err))
     }
 
     login(){
@@ -75,12 +86,9 @@ class Login extends Component {
 
         const credentials = { username : this.state.login_username , password : this.state.login_password };
 
-        if(credentials.username === "admin"){
-            console.log("admin");
-        }else{
-            console.log("not admin");
+        if(this.state.isAdmin){
+            this.setState({ open : true });
         }
-
         console.log(credentials);
     }
 
@@ -94,6 +102,28 @@ class Login extends Component {
         };
         this.addUser(credentials);
     }
+
+    addUser = (credentials) => {
+        console.log("addUser");
+        const fName  = credentials.firstName;
+        const lName = credentials.lastName;
+        const username = credentials.username;
+        const password = credentials.password;
+        const uID = this.state.lastUserID;
+
+        fetch(`http://localhost:4000/users/add?userID=${uID}&userName=${username}&userPassword=${password}&lastName=${lName}&firstName=${fName}`)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
+    }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        this.setState({ open: false });
+    };
+
     render() {
         return (
         <Layout>
@@ -133,9 +163,7 @@ class Login extends Component {
                                 />
                             </Grid>
                             <Grid item>
-                                <Link href={this.state.adminRoute}>
                                     <Button variant="contained" onClick={this.login.bind(this)} onPointerEnter={this.auth.bind(this)}>Login</Button> 
-                                </Link>
                             </Grid>
                         </Grid>
                     </Paper>
@@ -214,24 +242,35 @@ class Login extends Component {
                     </Grid>
                 </Grid>
             </Grid>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                open={this.state.open}
+                autoHideDuration={6000}
+                onClose={this.handleClose}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">Logged in!</span>}
+                action={[
+                    <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
+                    UNDO
+                    </Button>,
+                    <IconButton
+                        key="close"
+                        aria-label="Close"
+                        color="inherit"
+                        onClick={this.handleClose}
+                    >
+                        CLOSE
+                    </IconButton>,
+                ]}
+            />
         </Layout>
         );
     }
-
-    addUser = (credentials) => {
-        console.log("addUser");
-        const fName  = credentials.firstName;
-        const lName = credentials.lastName;
-        const username = credentials.username;
-        const password = credentials.password;
-        const uID = this.state.lastUserID;
-
-        fetch(`http://localhost:4000/users/add?userID=${uID}&userName=${username}&userPassword=${password}&lastName=${lName}&firstName=${fName}`)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err))
-    }
-    
 }
 
 export default Login;

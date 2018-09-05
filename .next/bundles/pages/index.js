@@ -1,7 +1,7 @@
 module.exports =
 __NEXT_REGISTER_PAGE('/', function() {
           var comp =
-      webpackJsonp([10],{
+      webpackJsonp([4],{
 
 /***/ "./components/Header.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -27184,7 +27184,7 @@ exports.default = _default;
 /* unused harmony reexport Icon */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__IconButton__ = __webpack_require__("./node_modules/@material-ui/core/IconButton/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__IconButton___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_45__IconButton__);
-/* unused harmony reexport IconButton */
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_45__IconButton___default.a; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__Input__ = __webpack_require__("./node_modules/@material-ui/core/Input/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__Input___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_46__Input__);
 /* unused harmony reexport Input */
@@ -27242,7 +27242,7 @@ exports.default = _default;
 /* unused harmony reexport NoSsr */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_64__Paper__ = __webpack_require__("./node_modules/@material-ui/core/Paper/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_64__Paper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_64__Paper__);
-/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_64__Paper___default.a; });
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_64__Paper___default.a; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_65__Popover__ = __webpack_require__("./node_modules/@material-ui/core/Popover/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_65__Popover___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_65__Popover__);
 /* unused harmony reexport Popover */
@@ -27269,7 +27269,7 @@ exports.default = _default;
 /* unused harmony reexport Slide */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_73__Snackbar__ = __webpack_require__("./node_modules/@material-ui/core/Snackbar/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_73__Snackbar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_73__Snackbar__);
-/* unused harmony reexport Snackbar */
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_73__Snackbar___default.a; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_74__SnackbarContent__ = __webpack_require__("./node_modules/@material-ui/core/SnackbarContent/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_74__SnackbarContent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_74__SnackbarContent__);
 /* unused harmony reexport SnackbarContent */
@@ -27335,7 +27335,7 @@ exports.default = _default;
 /* unused harmony reexport Tab */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_95__TextField__ = __webpack_require__("./node_modules/@material-ui/core/TextField/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_95__TextField___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_95__TextField__);
-/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_95__TextField___default.a; });
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_95__TextField___default.a; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_96__Toolbar__ = __webpack_require__("./node_modules/@material-ui/core/Toolbar/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_96__Toolbar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_96__Toolbar__);
 /* unused harmony reexport Toolbar */
@@ -27344,7 +27344,7 @@ exports.default = _default;
 /* unused harmony reexport Tooltip */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_98__Typography__ = __webpack_require__("./node_modules/@material-ui/core/Typography/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_98__Typography___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_98__Typography__);
-/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_98__Typography___default.a; });
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_98__Typography___default.a; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_99__withMobileDialog__ = __webpack_require__("./node_modules/@material-ui/core/withMobileDialog/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_99__withMobileDialog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_99__withMobileDialog__);
 /* unused harmony reexport withMobileDialog */
@@ -41531,7 +41531,7 @@ function (_Component) {
           fileName: _jsxFileName,
           lineNumber: 47
         }
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["e" /* Typography */], {
+      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["g" /* Typography */], {
         variant: "display3",
         style: {
           textAlign: 'center'
@@ -41547,7 +41547,7 @@ function (_Component) {
           fileName: _jsxFileName,
           lineNumber: 52
         }
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["c" /* Paper */], {
+      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__material_ui_core__["d" /* Paper */], {
         style: {
           padding: 20
         },
@@ -41652,7 +41652,7 @@ function (_Component) {
 
 /***/ }),
 
-/***/ 9:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./pages/index.js");
@@ -41660,7 +41660,7 @@ module.exports = __webpack_require__("./pages/index.js");
 
 /***/ })
 
-},[9])
+},[3])
           return { page: comp.default }
         })
       ;
