@@ -11,15 +11,14 @@ import Router from 'next/router'
 
 class Index extends Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             text : '',
             prevText : '',
             user : { user : {}}
         };
     }
-
-
+  
     componentDidMount(){
         var user = window.sessionStorage.getItem('info');
         if (user === null){

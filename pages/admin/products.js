@@ -1,16 +1,48 @@
 import React, { Component } from 'react';
 import AdminLayout from '../../components/AdminLayout';
-import { Typography, Table, TableHead, TableCell, TableRow, TableBody } from '@material-ui/core';
+import { 
+    Typography,
+    Table, 
+    TableHead, 
+    TableCell, 
+    TableRow, 
+    TableBody, 
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions,
+} from '@material-ui/core';
 
 class Products extends Component{
     constructor(props){
         super(props);
         this.state = {
             products : [],
+            confirmationModal : false,
         }
     }
 
-    componentWillMount(){
+    handleClickOpen = (productID) => {
+        console.log("Modal opened!");
+        console.log("product ID:" + productID);
+        this.setState({ 
+            confirmationModal: true,
+            selectedID : productID,
+        });
+    };
+    
+    handleClose = () => {
+        this.setState({ confirmationModal: false });
+    };
+
+    deleteItem = () => {
+        console.log("TODO: delete from database");
+        this.setState({ confirmationModal: false });
+    };
+
+    componentDidMount(){
         fetch('http://localhost:4000/products')
         .then(response => response.json())
         .then(json => {
@@ -58,13 +90,34 @@ class Products extends Component{
                                         {products.supermarketName}
                                     </TableCell>
                                     <TableCell>
-                                        EDIT | X
+                                        <Button color="secondary" onClick={() => this.handleClickOpen(products.productID)}>X</Button>
                                     </TableCell>
                                 </TableRow>
                             )
-                        })}
+                        },this)}
                     </TableBody>
                 </Table>
+                <Dialog
+                open={this.state.confirmationModal}
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Delete this product?"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Are you sure you want to delete this product?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            No
+                        </Button>
+                        <Button onClick={this.deleteItem.bind(this)} color="secondary" autoFocus>
+                            Yes
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </AdminLayout>
         )
     }

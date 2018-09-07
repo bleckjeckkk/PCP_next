@@ -38,11 +38,11 @@ class Messages extends Component{
     };
 
     deleteMessage = () => {
-        console.log("deleteMessage");
+        console.log("TODO: delete from database");
         this.setState({ confirmationModal: false });
     };
 
-    componentWillMount(){
+    componentDidMount(){
         fetch('http://localhost:4000/feedbacks')
         .then(response => response.json())
         .then(json => {

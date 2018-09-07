@@ -44,7 +44,7 @@ class About extends Component{
                         It had such a knowledge of the tips and tricks that it could even keep the ones the devs cared about from getting an F. The tips and tricks is a pathway to many abilities some consider to be unnatural. It became so powerful… the only thing the devs were afraid of was the app losing its power, which eventually, of course, it did.
                     </Typography>   
                     <Typography variant="body2">
-                        Unfortunately, it downloaded the entire database everytime it ran, then the school wifi made it worse, and gave him 30 seconds of boot up time. Ironic. It could save others from failure, but not itself.
+                        Unfortunately, it downloaded the entire database everytime it ran, then the school WiFi made it worse, and gave him 30 seconds of boot up time. Ironic. It could save others from failure, but not itself.
                     </Typography>   
                     <br />
                     <br />

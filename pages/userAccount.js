@@ -40,6 +40,11 @@ class Index extends Component {
         });
     }
 
+    logout(){
+        const info = {};
+        window.sessionStorage.setItem("info", JSON.stringify(info));
+        Router.push('/login');
+    }
     render() {
         return (
         <Layout user={this.state.user.user}>
@@ -48,7 +53,7 @@ class Index extends Component {
                 direction="column"
                 justify="center"
                 alignItems="stretch"
-                spacing={40}
+                spacing={8}
                 >
                 <Grid item md={12}>
                     <Grid container
@@ -86,7 +91,8 @@ class Index extends Component {
                                     >
                                         <Button variant="contained">{this.state.user.user.firstName}</Button> 
                                         <Button variant="contained">{this.state.user.user.lastName}</Button> 
-                                        <Button variant="contained">{this.state.user.user.userName}</Button> 
+                                        <Button variant="contained">{this.state.user.user.userName}</Button>  
+                                        <Button variant="contained" color="secondary" onClick={() => this.logout()}> Log Out </Button>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -99,7 +105,6 @@ class Index extends Component {
                         justify="center"
                         alignItems="flex-start"
                         style={{ padding : 20 }}
-                        spacing={40}
                     >
                         <Grid item md={5}>
                             <Grid container
@@ -121,27 +126,35 @@ class Index extends Component {
                         <Grid item md={1}>
                             <span></span>
                         </Grid>
-                        <Grid item md={5}>
+                        <Grid item md={6}>
                             <Grid container
                                 direction="column"
                                 justify="center"
-                                alignItems="center"
+                                alignItems="stretch"
                             >
-                                <Typography variant="display1">
+                                <Typography variant="display1" align="center">
                                     FEEDBACK
                                 </Typography>
                                 <TextField
-                                    id="name"
-                                    label="Feedback"
+                                    id="feedbackText"
                                     value={this.state.text}
                                     onChange={this.onChange.bind(this)}
+                                    multiline
+                                    rowsMax="8"
                                     margin="normal"
-                                    fullWidth
+                                    fullwidth
                                 />
-                                <Button variant="contained">SEND FEEDBACK</Button> 
-
+                                <Button variant="contained">SEND FEEDBACK</Button>
                             </Grid>
                         </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item md={12}>
+                    <Grid container
+                        direction="column"
+                        justify="flex-end"
+                        alignItems="center"
+                    >
                     </Grid>
                 </Grid>
             </Grid>
