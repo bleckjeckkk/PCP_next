@@ -46,8 +46,8 @@ class Users extends Component{
         fetch('http://localhost:4000/users')
         .then(response => response.json())
         .then(json => {
-            console.log(json.data);
-            this.setState({ users : json.data });
+            console.log(json.res);
+            this.setState({ users : json.res });
         });
     }
 

@@ -46,8 +46,8 @@ class Messages extends Component{
         fetch('http://localhost:4000/feedbacks')
         .then(response => response.json())
         .then(json => {
-            console.log(json.data);
-            this.setState({ messages : json.data });
+            console.log(json.res);
+            this.setState({ messages : json.res });
         });
     }
 

@@ -1,7 +1,14 @@
 import Link from 'next/link'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
+import {
+    Grid,
+    Paper,
+    List,
+    ListItem,
+    ListItemText,
+    Divider,
+    Button
+} from '@material-ui/core'
+
 import Router from 'next/router'
 
 function logout(){
@@ -11,62 +18,46 @@ function logout(){
 }
 
 const AdminSidebar = () => (
-        <Paper style= {{padding : 20}}>
-            <Grid
-                container
-                direction="column"
-                justify="space-between"
-                alignItems="flex-start"
-                spacing = {16}
-                >
-                <Grid item>
-                    <Link href="/admin/adminHome" prefetch replace>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
-                            Administrator Page
-                        </Button>
-                    </Link>
-                </Grid>
-                <Grid item>
-                    <Link href="/admin/messages" prefetch replace>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
-                            Messages
-                        </Button>
-                    </Link>
-                </Grid>
-                <Grid item>
-                    <Link href="/admin/supermarkets" prefetch replace>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
-                            Manage Supermarkets
-                        </Button>
-                    </Link>
-                </Grid>
-                <Grid item>
-                    <Link href="/admin/products" prefetch replace>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
-                            Manage Products
-                        </Button>
-                    </Link>
-                </Grid>
-                <Grid item>
-                    <Link href="/admin/users" prefetch replace>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
-                            Manage Users
-                        </Button>
-                    </Link>
-                </Grid>
-                <Grid item>
-                    <Button onClick={() => {
+        <Paper style= {{padding : 20}}> 
+            <List component="nav">
+                <Link href="/admin/adminHome" prefetch replace>
+                    <ListItem button>
+                        <ListItemText primary="Administrator Page" />
+                    </ListItem>
+                </Link>
+                <Divider />
+                <Link href="/admin/messages" prefetch replace>
+                    <ListItem button divider>
+                        <ListItemText primary="Messages" />
+                    </ListItem>
+                </Link>
+                <Link href="/admin/supermarkets" prefetch replace>
+                    <ListItem button>
+                        <ListItemText primary="Manage Supermarkets" />
+                    </ListItem>
+                </Link>
+                <Divider light />
+                <Link href="/admin/products" prefetch replace>
+                    <ListItem button>
+                        <ListItemText primary="Manage Products" />
+                    </ListItem>
+                </Link>
+                <Divider light />
+                <Link href="/admin/users" prefetch replace>
+                    <ListItem button>
+                        <ListItemText primary="Manage Users" />
+                    </ListItem>
+                </Link>
+                <Divider light />
+                <ListItem button onClick={()=>{
                             const info = {};
                             window.sessionStorage.setItem("info", JSON.stringify(info));
+                            logout();
                             Router.replace('/');
-                            }}
-                            color="inherit" 
-                            variant='outlined' 
-                            style={{backgroundColor : '#999999', color : 'white' }}>
-                        Logout
-                    </Button>
-                </Grid>
-            </Grid>
+                    }}>
+                    <ListItemText primary="Log out" />
+                </ListItem>
+            </List>
         </Paper>
 )
 

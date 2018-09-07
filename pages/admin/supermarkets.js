@@ -46,8 +46,8 @@ class Supermarkets extends Component{
         fetch('http://localhost:4000/supermarkets')
         .then(response => response.json())
         .then(json => {
-            console.log(json.data);
-            this.setState({ supermarkets : json.data });
+            console.log(json.res);
+            this.setState({ supermarkets : json.res });
         });
     }
 

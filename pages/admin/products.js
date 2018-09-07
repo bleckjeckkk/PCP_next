@@ -46,12 +46,8 @@ class Products extends Component{
         fetch('http://localhost:4000/products')
         .then(response => response.json())
         .then(json => {
-            console.log(json.data);
-            this.setState({ products : json.data });
-            localStorage.setItem('products', JSON.stringify(json.data));
-            const data = JSON.parse(localStorage.getItem('products'));
-            console.log("From localStorge");
-            console.log(data);
+            console.log(json.res);
+            this.setState({ products : json.res });
         });
     }
 
