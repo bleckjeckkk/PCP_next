@@ -21,7 +21,6 @@ class ProductDialog extends React.Component {
   
     render() {
       const { onClose, selectedValue, ...other } = this.props;
-      console.log(this.props.items);
       return (
         <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
           <DialogTitle id="simple-dialog-title">Select product</DialogTitle>

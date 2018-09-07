@@ -20,35 +20,35 @@ const AdminSidebar = () => (
                 spacing = {16}
                 >
                 <Grid item>
-                    <Link href="/admin/adminHome" prefetch>
+                    <Link href="/admin/adminHome" prefetch replace>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Administrator Page
                         </Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/admin/messages" prefetch>
+                    <Link href="/admin/messages" prefetch replace>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Messages
                         </Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/admin/supermarkets" prefetch>
+                    <Link href="/admin/supermarkets" prefetch replace>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Manage Supermarkets
                         </Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/admin/products" prefetch>
+                    <Link href="/admin/products" prefetch replace>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Manage Products
                         </Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link href="/admin/users" prefetch>
+                    <Link href="/admin/users" prefetch replace>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                             Manage Users
                         </Button>
@@ -58,7 +58,7 @@ const AdminSidebar = () => (
                     <Button onClick={() => {
                             const info = {};
                             window.sessionStorage.setItem("info", JSON.stringify(info));
-                            Router.push('/login');
+                            Router.replace('/');
                             }}
                             color="inherit" 
                             variant='outlined' 

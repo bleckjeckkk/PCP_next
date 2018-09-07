@@ -3,7 +3,8 @@ import AdminSidebar from './AdminSidebar'
 
 import { 
   Typography,
-   Grid } from '@material-ui/core';
+   Grid 
+} from '@material-ui/core';
 
 const layoutStyle = {
   margin: 20,

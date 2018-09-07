@@ -55,6 +55,9 @@ class Supermarkets extends Component{
         return(
             <AdminLayout>
                 <Typography variant="display1"> Supermarkets </Typography>
+                <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
+                    Add
+                </Button>
                 <Table>
                     <TableHead>
                         <TableRow>

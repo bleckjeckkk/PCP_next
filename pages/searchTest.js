@@ -21,6 +21,14 @@ import Router from 'next/router'
 
 import ProductDialog from '../components/ProductDialog';
 
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
 class Index extends Component {
     constructor(props){
         super(props);
@@ -33,7 +41,6 @@ class Index extends Component {
             selectedItems : [],
         };
     }
-  
   
     removeFromList = (product) => {
         console.log("removeFromList");
@@ -60,8 +67,19 @@ class Index extends Component {
     handleClose = value => {
         console.log("Closed");
         console.log(value);
+        if(isEmpty(value)){
+            this.setState({
+                resultModalOpen: false,
+            });
+            return;
+        }
         var temp = this.state.selectedItems.slice();
-        temp.push(value);
+        var found = temp.some(function (prod) {
+            return prod.productID === value.productID;
+        });
+        if(!found){
+            temp.push(value);
+        }
         this.setState({
             resultModalOpen: false,
             selectedItems : temp 

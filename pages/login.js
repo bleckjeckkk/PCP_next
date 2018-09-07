@@ -78,7 +78,9 @@ class Login extends Component {
                         user : response.user,
                      }
                     window.sessionStorage.setItem("info", JSON.stringify(info));
-                    Router.push('/admin/adminHome');
+                    setTimeout(() => {
+                        Router.replace('/admin/adminHome');
+                    },1500);
                 }else{
                     console.log("---not admin---");
                     const info = {
@@ -87,12 +89,14 @@ class Login extends Component {
                         user : response.user,
                      }
                     window.sessionStorage.setItem("info", JSON.stringify(info));
-                    Router.push('/userAccount');
+                    setTimeout(()=>{
+                        Router.push('/userAccount');
+                    },1500);
                 }
             }else{
                 this.setState({ 
                     open : true,
-                    snackbarMessage : 'Error! Incorrect username/password.',
+                    snackbarMessage : 'You have inputted the wrong username/password. Try again.',
                 });
             }
         })
