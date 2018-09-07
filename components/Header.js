@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import { Typography } from '../node_modules/@material-ui/core';
 
 function isEmpty(obj) {
     for(var key in obj) {
@@ -18,28 +19,57 @@ const Header = (props) => (
             justify="space-between"
             alignItems="center"
         >
-            <Grid>
-                <Link href="/" prefetch>
-                    <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Home</Button>
-                </Link>
-                <Link href="/about" prefetch>
-                    <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>About</Button>
-                </Link>
-                {/* <Link href="/admin/adminHome" prefetch>
-                    <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Admin Home</Button>
-                </Link> */}
+            <Grid item>
+                <Grid container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="center"
+                    >
+                    <Link href="/" prefetch>
+                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Home</Button>
+                    </Link>
+                    <Link href="/about" prefetch>
+                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>About</Button>
+                    </Link>
+                    {/* <Link href="/admin/adminHome" prefetch>
+                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Admin Home</Button>
+                    </Link> */}
+                </Grid>
             </Grid>
-            <Grid>
-                {isEmpty(props.user) ? (
-                    <Link href="/login" prefetch>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Login/Logout</Button>
-                    </Link>
-                    ):(
-                    <Link href="/userAccount" prefetch>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>{props.user.userName}</Button>
-                    </Link>
-                    )
-                }
+            <Grid item>
+                <Grid container
+                    direction="row"
+                    justify="flex-end"
+                    alignItems="center">
+                    {isEmpty(props.user) ? (
+                        <Grid item>
+                            <Typography variant="body2">
+                                Hello, Guest!
+                            </Typography>
+                        </Grid>
+                        ):(
+                        <Grid item>
+                            <Typography variant="body2">
+                                Hello, {props.user.userName}!
+                            </Typography>
+                        </Grid>
+                        )
+                    }
+                    {isEmpty(props.user) ? (
+                        <Grid item>
+                            <Link href="/login" prefetch>
+                                <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Login/Logout</Button>
+                            </Link>
+                        </Grid>
+                        ):(
+                        <Grid item>
+                            <Link href="/userAccount" prefetch>
+                                <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>{props.user.userName}</Button>
+                            </Link>
+                        </Grid>
+                        )
+                    }
+                </Grid>
             </Grid>
         </Grid>
     </div>

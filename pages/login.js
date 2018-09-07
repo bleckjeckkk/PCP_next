@@ -36,7 +36,7 @@ class Login extends Component {
     }
 
     componentDidMount(){
-        console.log("componentWillMount");
+        console.log("componentDidMount");
         this.getMaxID();
     }
 
@@ -45,7 +45,7 @@ class Login extends Component {
         fetch('http://localhost:4000/users/getCount')
         .then(response => response.json())
         .then(json => {
-            const next = json.data[0].count + 1;
+            const next = json.res[0].count + 1;
             this.setState({ lastUserID : next});
         });
     }
@@ -60,7 +60,6 @@ class Login extends Component {
             open : true,
             snackbarMessage : 'Logging in...',
         });
-        console.log("auth");
 
         const credentials = { username : this.state.login_username , password : this.state.login_password };
 
@@ -103,26 +102,33 @@ class Login extends Component {
         .catch(err => console.error(err))
     }
 
-    login(){
-        console.log("button pressed!");
-
-        const credentials = { username : this.state.login_username , password : this.state.login_password };
-
-        if(this.state.isAdmin){
-            this.setState({ open : true });
-        }
-        console.log(credentials);
-    }
-
     signup(){
-        console.log("signup button pressed!");
+        this.setState({ 
+            open : true,
+            snackbarMessage : 'Registering user...',
+        });
+
         const credentials = { 
             firstName : this.state.fName,
             lastName : this.state.lName,
             username : this.state.signin_username,
             password : this.state.signin_password,
         };
-        this.addUser(credentials);
+
+        fetch(`http://localhost:4000/users/check?userName=${credentials.username}`)
+        .then(response => response.json())
+        .then(response => {
+            console.log(response.unique);
+            if(response.unique){
+                this.addUser(credentials);
+            }else{
+                this.setState({ 
+                    open : true,
+                    snackbarMessage : 'Your username already exists. Please try another one.',
+                });
+            }
+        })
+        .catch(err => console.error(err));
     }
 
     addUser = (credentials) => {
@@ -135,7 +141,18 @@ class Login extends Component {
 
         fetch(`http://localhost:4000/users/add?userID=${uID}&userName=${username}&userPassword=${password}&lastName=${lName}&firstName=${fName}`)
         .then(response => response.json())
-        .then(response => console.log(response))
+        .then(response => {
+            if(response.msg === 'success'){
+                this.setState({ 
+                    open : true,
+                    snackbarMessage : 'User Registered!',
+                    signin_username : '',
+                    signin_password : '',
+                    fName : '',
+                    lName : ''
+                });
+            }
+        })
         .catch(err => console.error(err))
     }
 
