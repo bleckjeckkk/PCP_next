@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import AdminLayout from '../../components/AdminLayout';
+import React, { Component } from 'react'
+import AdminLayout from '../../components/AdminLayout'
 import { 
     Typography,
     Table, 
@@ -13,8 +13,8 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
-} from '@material-ui/core';
-
+} from '@material-ui/core'
+import { PCP_SERVER } from '../../res/ImportantThings'
 class Products extends Component{
     constructor(props){
         super(props);
@@ -43,7 +43,7 @@ class Products extends Component{
     };
 
     componentDidMount(){
-        fetch('http://localhost:4000/products')
+        fetch(`${PCP_SERVER}/products`)
         .then(response => response.json())
         .then(json => {
             console.log(json.res);
@@ -53,7 +53,7 @@ class Products extends Component{
 
     render(){
         return(
-            <AdminLayout>
+            <AdminLayout page="Products">
                 <Typography variant="display1"> Products </Typography>
                 <Table>
                     <TableHead>

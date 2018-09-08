@@ -22,7 +22,7 @@ class About extends Component{
 
     render(){
         return(
-        <Layout user={this.state.user.user}>
+        <Layout user={this.state.user.user} page="About">
             <Grid container
                 direction="column"
                 justify="center"

@@ -40,7 +40,7 @@ const poem = (
 );
 
 export default () => (
-    <AdminLayout>
+    <AdminLayout page="Home">
         <Typography variant="headline"> Administrator Home Page </Typography>
         {poem}
     </AdminLayout>

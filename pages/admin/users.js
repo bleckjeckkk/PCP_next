@@ -13,7 +13,8 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
-} from '@material-ui/core';
+} from '@material-ui/core'
+import { PCP_SERVER } from '../../res/ImportantThings'
 
 class Users extends Component{
     constructor(props){
@@ -43,7 +44,7 @@ class Users extends Component{
     };
 
     componentDidMount(){
-        fetch('http://localhost:4000/users')
+        fetch(`${PCP_SERVER}/users`)
         .then(response => response.json())
         .then(json => {
             console.log(json.res);
@@ -53,7 +54,7 @@ class Users extends Component{
 
     render(){
         return(
-            <AdminLayout>
+            <AdminLayout page="Users">
                 <Typography variant="display1"> Users </Typography>
                 <Table>
                     <TableHead>

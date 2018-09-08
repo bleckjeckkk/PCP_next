@@ -15,6 +15,7 @@ import {
     DialogActions,
 } from '@material-ui/core';
 
+import { PCP_SERVER } from '../../res/ImportantThings'
 class Messages extends Component{
     constructor(props){
         super(props);
@@ -43,7 +44,7 @@ class Messages extends Component{
     };
 
     componentDidMount(){
-        fetch('http://localhost:4000/feedbacks')
+        fetch(`${PCP_SERVER}/feedbacks`)
         .then(response => response.json())
         .then(json => {
             console.log(json.res);
@@ -53,7 +54,7 @@ class Messages extends Component{
 
     render(){
         return(
-            <AdminLayout>
+            <AdminLayout page="Messages">
                 <Typography variant="display1"> Messages </Typography>
                 <Table>
                     <TableHead>

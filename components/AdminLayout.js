@@ -1,6 +1,8 @@
 import Header from './Header'
 import AdminSidebar from './AdminSidebar'
 
+import Head from 'next/head'
+
 import { 
   Typography,
    Grid 
@@ -13,6 +15,11 @@ const layoutStyle = {
 
 const AdminLayout = (props) => (
   <div style={{ padding : 10 }}>
+  
+    <Head>
+      <title>PCP Admin {props.page ? `| ${props.page}` : ''}</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
     <Grid container
           direction="column"
           justify="space-between"

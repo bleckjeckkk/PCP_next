@@ -36,19 +36,19 @@ const AdminSidebar = () => (
                         <ListItemText primary="Manage Supermarkets" />
                     </ListItem>
                 </Link>
-                <Divider light />
+                <Divider />
                 <Link href="/admin/products" prefetch replace>
                     <ListItem button>
                         <ListItemText primary="Manage Products" />
                     </ListItem>
                 </Link>
-                <Divider light />
+                <Divider />
                 <Link href="/admin/users" prefetch replace>
                     <ListItem button>
                         <ListItemText primary="Manage Users" />
                     </ListItem>
                 </Link>
-                <Divider light />
+                <Divider />
                 <ListItem button onClick={()=>{
                             const info = {};
                             window.sessionStorage.setItem("info", JSON.stringify(info));

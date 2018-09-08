@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Layout from '../components/Layout'
 import Link from 'next/link'
 import Router from 'next/router'
+import SnackbarWrapper from '../components/Snackbar'
 import { 
     Paper, 
     Typography,
@@ -14,7 +15,12 @@ import {
     IconButton,
 } from '@material-ui/core'
 
+import { PCP_SERVER } from '../res/ImportantThings'
+
 class Login extends Component {
+
+    queue = [];
+    
     constructor(props){
         super(props)
         this.state = {
@@ -31,18 +37,17 @@ class Login extends Component {
             open : false,
             isAdmin : false,
             auth : false,
-            snackbarMessage : 'hello world!',
+            snackbarMessage : '',
+            notUnique : false,
         };
     }
 
     componentDidMount(){
-        console.log("componentDidMount");
         this.getMaxID();
     }
 
     getMaxID(){
-        console.log("getMaxID");
-        fetch('http://localhost:4000/users/getCount')
+        fetch(`${PCP_SERVER}/users/getCount`)
         .then(response => response.json())
         .then(json => {
             const next = json.res[0].count + 1;
@@ -52,25 +57,18 @@ class Login extends Component {
 
     onChange(event){
         this.setState({ [event.target.id] : event.target.value });
-        this.setState({willAuth : true})
     }
 
     auth(){
-        this.setState({ 
-            open : true,
-            snackbarMessage : 'Logging in...',
-        });
+        this.showSnackbar('info',"Logging in...");
 
         const credentials = { username : this.state.login_username , password : this.state.login_password };
 
-        console.log(credentials);
-        fetch(`http://localhost:4000/users/auth?userName=${credentials.username}&userPassword=${credentials.password}`)
+        fetch(`${PCP_SERVER}/users/auth?userName=${credentials.username}&userPassword=${credentials.password}`)
         .then(response => response.json())
         .then(response => {
-            console.log(response);
             if(response.auth){
                 if(response.admin){
-                    console.log("---admin---");
                     const info = {
                         admin : true,
                         auth : true,
@@ -81,7 +79,6 @@ class Login extends Component {
                         Router.replace('/admin/adminHome');
                     },1500);
                 }else{
-                    console.log("---not admin---");
                     const info = {
                         admin : false,
                         auth : true,
@@ -93,21 +90,17 @@ class Login extends Component {
                     },1500);
                 }
             }else{
-                this.setState({ 
-                    open : true,
-                    snackbarMessage : 'You have inputted the wrong username/password. Try again.',
-                });
+                setTimeout(()=>{
+                    this.showSnackbar('error',"You have inputted the wrong username/password. Try again.");
+                },1000);
             }
         })
         .catch(err => console.error(err))
     }
 
     signup(){
-        this.setState({ 
-            open : true,
-            snackbarMessage : 'Registering user...',
-        });
-
+        this.showSnackbar('info',"Registering user...");
+                
         const credentials = { 
             firstName : this.state.fName,
             lastName : this.state.lName,
@@ -115,45 +108,103 @@ class Login extends Component {
             password : this.state.signin_password,
         };
 
-        fetch(`http://localhost:4000/users/check?userName=${credentials.username}`)
+        if(credentials.firstName == '' || credentials.lastName == '' || credentials.username == '' || credentials.password ==''){
+            this.showSnackbar('error',"Please input missing fields.");
+            if(credentials.firstName == ''){
+                this.setState({ firstNameMissing : true});
+            }else{
+                this.setState({ firstNameMissing : false});
+            }
+            if(credentials.lastName == ''){
+                this.setState({ lastNameMissing : true});
+            }else{
+                this.setState({ lastNameMissing : false});
+            }
+            if(credentials.username == ''){
+                this.setState({ usernameMissing : true});
+            }else{
+                this.setState({ usernameMissing : false});
+            }
+            if(credentials.password == ''){
+                this.setState({ passwordMissing : true});
+            }else{
+                this.setState({ passwordMissing : false});
+            }
+            return;
+        }
+        fetch(`${PCP_SERVER}/users/check?userName=${credentials.username}`)
         .then(response => response.json())
         .then(response => {
-            console.log(response.unique);
             if(response.unique){
                 this.addUser(credentials);
             }else{
-                this.setState({ 
-                    open : true,
-                    snackbarMessage : 'Your username already exists. Please try another one.',
-                });
+                setTimeout(()=>{
+                    this.setState({
+                        notUnique : true,
+                    });
+                    this.showSnackbar('error',"This username already exists. Please try another one.");
+                },750);
             }
         })
         .catch(err => console.error(err));
     }
 
     addUser = (credentials) => {
-        console.log("addUser");
         const fName  = credentials.firstName;
         const lName = credentials.lastName;
         const username = credentials.username;
         const password = credentials.password;
         const uID = this.state.lastUserID;
 
-        fetch(`http://localhost:4000/users/add?userID=${uID}&userName=${username}&userPassword=${password}&lastName=${lName}&firstName=${fName}`)
+        fetch(`${PCP_SERVER}/users/add?userID=${uID}&userName=${username}&userPassword=${password}&lastName=${lName}&firstName=${fName}`)
         .then(response => response.json())
         .then(response => {
             if(response.msg === 'success'){
+                this.showSnackbar('success',"User Successfully Registered!");
                 this.setState({ 
-                    open : true,
-                    snackbarMessage : 'User Registered!',
                     signin_username : '',
                     signin_password : '',
                     fName : '',
-                    lName : ''
+                    lName : '',
+                    notUnique : false,
+                    usernameMissing : false,
+                    passwordMissing : false,
+                    firstNameMissing : false,
+                    lastNameMissing : false
                 });
+                this.getMaxID();
+            }else{
+                this.showSnackbar('error',"Error: something happened.");
+                console.log(response.res);
             }
         })
         .catch(err => console.error(err))
+    }
+
+
+    showSnackbar(mode, message){
+        this.queue.push({
+            message,
+            mode,
+            key: new Date().getTime(),
+        });
+    
+        if (this.state.open) {
+          this.setState({ open: false });
+        } else {
+          this.processQueue();
+        }
+    }
+
+    processQueue = () => {
+        if (this.queue.length > 0) {
+          const msg = this.queue.shift();
+          this.setState({
+            snackbarMessage: msg.message,
+            snackbarMode : msg.mode,
+            open: true,
+          });
+        }
     }
 
     handleClose = (event, reason) => {
@@ -163,9 +214,13 @@ class Login extends Component {
         this.setState({ open: false });
     };
 
+    handleExited = () => {
+        this.processQueue();
+    };
+
     render() {
         return (
-        <Layout>
+        <Layout page="Login">
             <Grid
                 container
                 direction="column"
@@ -238,6 +293,7 @@ class Login extends Component {
                                 </Typography>
                                 <Grid item>
                                     <TextField
+                                        error={this.state.firstNameMissing}
                                         id="fName"
                                         label="First Name"
                                         value={this.state.fName}
@@ -247,6 +303,7 @@ class Login extends Component {
                                 </Grid>
                                 <Grid item>
                                     <TextField
+                                        error={this.state.lastNameMissing}
                                         id="lName"
                                         label="Last Name"
                                         value={this.state.lName}
@@ -256,6 +313,7 @@ class Login extends Component {
                                 </Grid>
                                 <Grid item>
                                     <TextField
+                                        error={this.state.notUnique || this.state.usernameMissing}
                                         id="signin_username"
                                         label="User Name"
                                         value={this.state.signin_username}
@@ -265,6 +323,7 @@ class Login extends Component {
                                 </Grid>
                                 <Grid item>
                                     <TextField
+                                        error={this.state.passwordMissing}
                                         id="signin_password"
                                         label="Password"
                                         value={this.state.signin_password}
@@ -289,21 +348,14 @@ class Login extends Component {
                 open={this.state.open}
                 autoHideDuration={6000}
                 onClose={this.handleClose}
-                ContentProps={{
-                    'aria-describedby': 'message-id',
-                }}
-                message={<span id="message-id">{this.state.snackbarMessage}</span>}
-                action={[
-                    <Button
-                        key="close"
-                        aria-label="Close"
-                        color="inherit"
-                        onClick={this.handleClose}
-                    >
-                        CLOSE
-                    </Button>,
-                ]}
-            />
+                onExited={this.handleExited}
+                >
+                <SnackbarWrapper
+                    variant={this.state.snackbarMode}
+                    message={this.state.snackbarMessage}
+                    onClose={this.handleClose}
+                />
+            </Snackbar>
         </Layout>
         );
     }

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import AdminLayout from '../../components/AdminLayout';
+import React, { Component } from 'react'
+import AdminLayout from '../../components/AdminLayout'
 import { 
     Typography,
     Table, 
@@ -13,8 +13,8 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
-} from '@material-ui/core';
-
+} from '@material-ui/core'
+import { PCP_SERVER } from '../../res/ImportantThings'
 class Supermarkets extends Component{
     constructor(props){
         super(props);
@@ -43,7 +43,7 @@ class Supermarkets extends Component{
     };
 
     componentDidMount(){
-        fetch('http://localhost:4000/supermarkets')
+        fetch(`${PCP_SERVER}/supermarkets`)
         .then(response => response.json())
         .then(json => {
             console.log(json.res);
@@ -53,7 +53,7 @@ class Supermarkets extends Component{
 
     render(){
         return(
-            <AdminLayout>
+            <AdminLayout page="Supermarkets">
                 <Typography variant="display1"> Supermarkets </Typography>
                 <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                     Add

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Layout from '../components/Layout';
+import React, { Component } from 'react'
+import Layout from '../components/Layout'
 
 import { 
     Button,
@@ -15,11 +15,13 @@ import {
     Avatar,
     ListItemText,
     ListItemSecondaryAction 
-} from '@material-ui/core';
+} from '@material-ui/core'
 
 import Router from 'next/router'
 
-import ProductDialog from '../components/ProductDialog';
+import ProductDialog from '../components/ProductDialog'
+
+import { PCP_SERVER } from '../res/ImportantThings'
 
 function isEmpty(obj) {
     for(var key in obj) {
@@ -43,8 +45,6 @@ class Index extends Component {
     }
   
     removeFromList = (product) => {
-        console.log("removeFromList");
-        console.log(product);
         var temp = this.state.selectedItems.slice();
         const index = temp.indexOf(product);
         temp.splice(index,1);
@@ -55,18 +55,14 @@ class Index extends Component {
     };
 
     handleClickOpen = () => {
-        console.log("handleClickOpen");
-        fetch('http://localhost:4000/products')
+        fetch(`${PCP_SERVER}/products/find?productName=${this.state.text}`)
         .then(response => response.json())
         .then(json => {
-            console.log(json.data);
-            this.setState({ queriedItems : json.data, resultModalOpen:true });
+            this.setState({ queriedItems : json.res, resultModalOpen:true });
         });
     };
     
     handleClose = value => {
-        console.log("Closed");
-        console.log(value);
         if(isEmpty(value)){
             this.setState({
                 resultModalOpen: false,
@@ -75,7 +71,7 @@ class Index extends Component {
         }
         var temp = this.state.selectedItems.slice();
         var found = temp.some(function (prod) {
-            return prod.productID === value.productID;
+            return (prod.p_ID === value.p_ID) || (prod.matched_ID === value.p_ID);
         });
         if(!found){
             temp.push(value);
@@ -97,12 +93,10 @@ class Index extends Component {
     }
 
     handleClick(){
-        console.log("Button clicked");
         localStorage.setItem('key', this.state.text);
     }
 
     onChange(event){
-        console.log("Change " + event.target.value);
         this.setState({
             text : event.target.value,
         });
@@ -156,15 +150,15 @@ class Index extends Component {
                     <List>
                     {this.state.selectedItems.map( item => {
                         return(
-                            <ListItem key={item.productID}>
+                            <ListItem key={item.p_ID}>
                               <ListItemAvatar>
                                 <Avatar>
-                                    {item.productID}
+                                    {item.p_ID}
                                 </Avatar>
                               </ListItemAvatar>
                               <ListItemText
-                                primary={item.productName}
-                                secondary={item.productPrice}
+                                primary={item.p_name}
+                                secondary={`${item.p_price} -- ${item.p_market}`}
                               />
                               <ListItemSecondaryAction>
                                 <Button color="secondary" onClick={() => this.removeFromList(item)}>X</Button>    
@@ -174,7 +168,7 @@ class Index extends Component {
                     },this)}
                     </List>  
                 </div>
-                <Button color="primary" onClick={() => console.log("Finalize")}>FINALIZE</Button>  
+                <Button color="primary" onClick={() => console.log("TODO: Finalize")}>FINALIZE</Button>  
             </Grid>
             <ProductDialog
                 open={this.state.resultModalOpen}

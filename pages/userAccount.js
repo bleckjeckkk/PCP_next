@@ -29,12 +29,10 @@ class Index extends Component {
     }
 
     handleClick(){
-        console.log("Button clicked");
         localStorage.setItem('key', this.state.text);
     }
 
     onChange(event){
-        console.log("Change " + event.target.value);
         this.setState({
             text : event.target.value,
         });
