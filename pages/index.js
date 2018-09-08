@@ -14,7 +14,8 @@ import {
     ListItemAvatar,
     Avatar,
     ListItemText,
-    ListItemSecondaryAction 
+    ListItemSecondaryAction, 
+    Collapse
 } from '@material-ui/core';
 
 import Router from 'next/router'
@@ -103,6 +104,15 @@ class Index extends Component {
         });
     }
 
+    saveList(){
+        const temp = this.state.selectedItems.slice();
+        var items = [];
+        temp.map( (item) => {
+            items.push(item.p_ID);
+        });
+        localStorage.setItem('selectedItems', JSON.stringify(items));
+    }
+
     render() {
         return (
         <Layout user={this.state.user.user} page="Home Screen">
@@ -146,30 +156,68 @@ class Index extends Component {
                         </Grid>
                     </Paper>
                 </Grid>
-                <div style={{ maxHeight: 300 , width : 360}}>
-                    Selected Items :  
-                    <List>
-                    {this.state.selectedItems.map( item => {
-                        return(
-                            <ListItem key={item.p_ID}>
-                              <ListItemAvatar>
-                                <Avatar>
-                                    {item.p_ID}
-                                </Avatar>
-                              </ListItemAvatar>
-                              <ListItemText
-                                primary={item.p_name}
-                                secondary={`${item.p_price} -- ${item.p_market}`}
-                              />
-                              <ListItemSecondaryAction>
-                                <Button color="secondary" onClick={() => this.removeFromList(item)}>X</Button>    
-                              </ListItemSecondaryAction>
-                            </ListItem>
-                        )
-                    },this)}
-                    </List>  
-                </div>
-                <Button color="primary" onClick={() => console.log("TODO: Finalize")}>FINALIZE</Button>  
+                <Grid item md={12}>
+                    <Collapse in={!isEmpty(this.state.selectedItems)}>
+                        <Grid container
+                            direction="column"
+                            justify="flex-start"
+                            alignItems="stretch"
+                            spacing={16}
+                            >
+                            <Grid item md={12}>
+                                <Grid container
+                                    direction="row"
+                                    justify="center"
+                                    alignItems="center"
+                                    >
+                                    <Grid item md={3} sm={false}>
+                                    </Grid>
+                                    <Grid item md={6} sm={12}>
+                                        <Paper style={{ maxHeight : 200  , overflowY : 'auto' , padding : 20}}>
+                                            <List style={{ maxHeight : 200 }}>
+                                            {this.state.selectedItems.map( item => {
+                                                return(
+                                                    <ListItem key={item.p_ID}>
+                                                    <ListItemAvatar>
+                                                        <Avatar>
+                                                            {item.p_ID}
+                                                        </Avatar>
+                                                    </ListItemAvatar>
+                                                    <ListItemText
+                                                        primary={item.p_name}
+                                                        secondary={`${item.p_price} -- ${item.p_market}`}
+                                                    />
+                                                    <ListItemSecondaryAction>
+                                                        <Button color="secondary" onClick={() => this.removeFromList(item)}>X</Button>    
+                                                    </ListItemSecondaryAction>
+                                                    </ListItem>
+                                                )
+                                            },this)}
+                                            </List>
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item md={3} sm={false}>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item md={12}>
+                                <Grid container
+                                    direction="row"
+                                    justify="center"
+                                    alignItems="center"
+                                    spacing={16}
+                                    >
+                                    <Grid item>
+                                        <Button color="primary" variant="contained" onClick={() => {this.saveList(); Router.push('/compare')}}>COMPARE</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button color="primary" variant="contained" onClick={() => this.saveList()}>SAVE</Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Collapse>
+                </Grid>
             </Grid>
             <ProductDialog
                 open={this.state.resultModalOpen}

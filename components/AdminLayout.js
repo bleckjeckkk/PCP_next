@@ -18,7 +18,6 @@ const AdminLayout = (props) => (
   
     <Head>
       <title>PCP Admin {props.page ? `| ${props.page}` : ''}</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <Grid container
           direction="column"
