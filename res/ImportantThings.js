@@ -1,1 +1,1 @@
-export const PCP_SERVER = 'http://' + '192.168.254.24' + ':4000'
+export const PCP_SERVER = 'http://' + 'localhost' + ':4000'

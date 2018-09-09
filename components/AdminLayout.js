@@ -23,6 +23,7 @@ const AdminLayout = (props) => (
           direction="column"
           justify="space-between"
           alignItems="stretch"
+          spacing={16}
     >
       <Grid item xs={12}>
         <Typography variant="display2">
@@ -39,7 +40,7 @@ const AdminLayout = (props) => (
             <AdminSidebar />
           </Grid>
           <Grid item xs = {9}>
-            <div style={{ padding : 20 }}>
+            <div style={{ paddingLeft : 10 }}>
               {props.children}
             </div>
           </Grid>

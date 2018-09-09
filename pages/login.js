@@ -38,6 +38,7 @@ class Login extends Component {
             isAdmin : false,
             auth : false,
             snackbarMessage : '',
+            snackbarMode : '',
             notUnique : false,
         };
     }
@@ -73,19 +74,23 @@ class Login extends Component {
                         admin : true,
                         auth : true,
                         user : response.user,
-                     }
-                    window.sessionStorage.setItem("info", JSON.stringify(info));
+                    }
+                    this.showSnackbar('success',`Welcome, ${info.user.userName}`)
                     setTimeout(() => {
-                        Router.replace('/admin/adminHome');
+                        Router.replace('/admin/adminHome')
+                        .then(() => {
+                            window.sessionStorage.setItem("info", JSON.stringify(info));
+                        });
                     },1500);
                 }else{
                     const info = {
                         admin : false,
                         auth : true,
                         user : response.user,
-                     }
-                    window.sessionStorage.setItem("info", JSON.stringify(info));
+                    }
+                    this.showSnackbar('success',`Welcome, ${info.user.userName}`)
                     setTimeout(()=>{
+                        window.sessionStorage.setItem("info", JSON.stringify(info));
                         Router.push('/userAccount');
                     },1500);
                 }
@@ -180,7 +185,6 @@ class Login extends Component {
         })
         .catch(err => console.error(err))
     }
-
 
     showSnackbar(mode, message){
         this.queue.push({

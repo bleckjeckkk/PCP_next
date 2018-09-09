@@ -12,9 +12,9 @@ import {
 import Router from 'next/router'
 
 function logout(){
-    const info = {};
+    var info = {};
     window.sessionStorage.setItem("info", JSON.stringify(info));
-    Router.push('/login');
+    Router.replace('/');
 }
 
 const AdminSidebar = () => (
@@ -49,12 +49,7 @@ const AdminSidebar = () => (
                     </ListItem>
                 </Link>
                 <Divider />
-                <ListItem button onClick={()=>{
-                            const info = {};
-                            window.sessionStorage.setItem("info", JSON.stringify(info));
-                            logout();
-                            Router.replace('/');
-                    }}>
+                <ListItem button onClick={()=>{logout()}}>
                     <ListItemText primary="Log out" />
                 </ListItem>
             </List>

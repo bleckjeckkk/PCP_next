@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-import { Typography } from '../node_modules/@material-ui/core';
+import { Typography, Paper } from '../node_modules/@material-ui/core';
 
 function isEmpty(obj) {
     for(var key in obj) {
@@ -12,13 +12,14 @@ function isEmpty(obj) {
 }
 
 const Header = (props) => (
-    <div style={divStyle.all}>
+    <div>
+        <Paper square elevation={5} style={{padding : 10 , backgroundColor: '#000000'}}>
         <Grid
             container
             direction="row"
             justify="space-between"
             alignItems="center"
-        >
+            >
             <Grid item>
                 <Grid container
                     direction="row"
@@ -72,6 +73,7 @@ const Header = (props) => (
                 </Grid>
             </Grid>
         </Grid>
+        </Paper>
     </div>
 )
 

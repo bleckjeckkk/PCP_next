@@ -13,6 +13,7 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
+    TextField,
 } from '@material-ui/core'
 import { PCP_SERVER } from '../../res/ImportantThings'
 class Products extends Component{
@@ -21,6 +22,7 @@ class Products extends Component{
         this.state = {
             products : [],
             confirmationModal : false,
+            formOpen : false,
         }
     }
 
@@ -40,6 +42,14 @@ class Products extends Component{
     deleteItem = () => {
         console.log("TODO: delete from database");
         this.setState({ confirmationModal: false });
+    };
+
+    handleFormOpen = () => {
+        this.setState({ formOpen: true });
+    };
+
+    handleFormClose = () => {
+        this.setState({ formOpen: false });
     };
 
     componentDidMount(){
@@ -94,11 +104,11 @@ class Products extends Component{
                     </TableBody>
                 </Table>
                 <Dialog
-                open={this.state.confirmationModal}
-                onClose={this.handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                >
+                    open={this.state.confirmationModal}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    >
                     <DialogTitle id="alert-dialog-title">{"Delete this product?"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
@@ -111,6 +121,35 @@ class Products extends Component{
                         </Button>
                         <Button onClick={this.deleteItem.bind(this)} color="secondary" autoFocus>
                             Yes
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                <Dialog
+                    open={this.state.formOpen}
+                    onClose={this.handleFormClose}
+                    aria-labelledby="form-dialog-title"
+                    >
+                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            To subscribe to this website, please enter your email address here. We will send
+                            updates occasionally.
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleFormClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={this.handleFormClose} color="primary">
+                            Subscribe
                         </Button>
                     </DialogActions>
                 </Dialog>

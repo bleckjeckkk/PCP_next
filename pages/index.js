@@ -15,7 +15,9 @@ import {
     Avatar,
     ListItemText,
     ListItemSecondaryAction, 
-    Collapse
+    Collapse,
+    Popover,
+    Tooltip
 } from '@material-ui/core';
 
 import Router from 'next/router'
@@ -60,6 +62,7 @@ class Index extends Component {
         fetch(`${PCP_SERVER}/products/find?productName=${this.state.text}`)
         .then(response => response.json())
         .then(json => {
+            console.log(json);
             this.setState({ queriedItems : json.res, resultModalOpen:true });
         });
     };
@@ -68,6 +71,7 @@ class Index extends Component {
         if(isEmpty(value)){
             this.setState({
                 resultModalOpen: false,
+                text : ''
             });
             return;
         }
@@ -80,7 +84,8 @@ class Index extends Component {
         }
         this.setState({
             resultModalOpen: false,
-            selectedItems : temp 
+            selectedItems : temp,
+            text : ''
         });
     };
 
@@ -112,7 +117,7 @@ class Index extends Component {
         });
         localStorage.setItem('selectedItems', JSON.stringify(items));
     }
-
+    
     render() {
         return (
         <Layout user={this.state.user.user} page="Home Screen">
@@ -149,7 +154,7 @@ class Index extends Component {
                                 />
                             </Grid>
                             <Grid item md = {1}>
-                                <Button variant="contained" onClick={this.handleClickOpen.bind(this)}>Search</Button>
+                                <Button variant="contained" onClick={() => this.handleClickOpen()}>Search</Button>
                             </Grid>
                             <Grid item md = {2}>
                             </Grid>
@@ -172,7 +177,7 @@ class Index extends Component {
                                     >
                                     <Grid item md={3} sm={false}>
                                     </Grid>
-                                    <Grid item md={6} sm={12}>
+                                    <Grid item md={6}>
                                         <Paper style={{ maxHeight : 200  , overflowY : 'auto' , padding : 20}}>
                                             <List style={{ maxHeight : 200 }}>
                                             {this.state.selectedItems.map( item => {
@@ -208,10 +213,28 @@ class Index extends Component {
                                     spacing={16}
                                     >
                                     <Grid item>
-                                        <Button color="primary" variant="contained" onClick={() => {this.saveList(); Router.push('/compare')}}>COMPARE</Button>
+                                        <Button color="primary" variant="contained" 
+                                            onClick={() => {
+                                                this.saveList();
+                                                Router.push('/compare');
+                                            }}>
+                                            COMPARE
+                                        </Button>
                                     </Grid>
                                     <Grid item>
-                                        <Button color="primary" variant="contained" onClick={() => this.saveList()}>SAVE</Button>
+                                        {isEmpty(this.state.user) ? (
+                                            <div>
+                                                <Tooltip disableFocusListener disableTouchListener title="You need to be logged in to use this feature"> 
+                                                    <span>
+                                                        <Button disabled color="primary" variant="contained">
+                                                            SAVE
+                                                        </Button>
+                                                    </span>
+                                                </Tooltip>
+                                            </div>
+                                            ) : (
+                                                <Button color="primary" variant="contained" onClick={() => this.saveList()}>SAVE</Button>
+                                            )}
                                     </Grid>
                                 </Grid>
                             </Grid>

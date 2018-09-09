@@ -7,7 +7,7 @@ const layoutStyle = {
 }
 
 const Layout = (props) => (
-  <div>
+  <div style={{ margin : '-8px'}}>
     <Head>
       <title>PCP {props.page ? `| ${props.page}` : ''}</title>
     </Head>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
     Dialog,
     DialogTitle,
@@ -27,10 +27,10 @@ class ProductDialog extends React.Component {
     };
   
     render() {
-      const { onClose, selectedValue, ...other } = this.props;
+      const { onClose, selectedValue, title, ...other } = this.props;
       return (
         <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
-          <DialogTitle id="simple-dialog-title">{isNotEmpty(this.props.items) ? 'Select product' : 'No Product Found!'}</DialogTitle>
+          <DialogTitle id="simple-dialog-title">{isNotEmpty(this.props.items) ? (isNotEmpty(this.props.title) ? `${this.props.title}` : 'Select product') : 'No Product Found!'}</DialogTitle>
           <div>
             <List>
               { isNotEmpty(this.props.items) ? 
@@ -39,10 +39,10 @@ class ProductDialog extends React.Component {
                     <ListItem button onClick={() => this.handleListItemClick(item)} key={item.p_ID}>
                       <ListItemAvatar>
                         <Avatar>
-                            {item.p_availability ? 'Y' : 'N'}
+                            {item.p_ID}
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={item.p_name} secondary={`${item.p_price} -- ${item.p_market}`}/>
+                      <ListItemText primary={item.p_name} secondary={`Php ${item.p_price} [${item.p_market}]`}/>
                     </ListItem>
                   ),this)
                 ) : (

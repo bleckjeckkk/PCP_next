@@ -13,43 +13,106 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
+    Grid,
+    Snackbar,
 } from '@material-ui/core';
+import SnackbarWrapper from '../../components/Snackbar'
+import Router from 'next/router'
 
 import { PCP_SERVER } from '../../res/ImportantThings'
+
 class Messages extends Component{
+
+    queue = [];
+
     constructor(props){
         super(props);
         this.state = {
             messages : [],
             confirmationModal : false,
+            open : false,
+            snackbarMessage : '',
+            snackbarMode : '',
         }
     }
-
+// PAGE OPERATIONS
     handleClickOpen = (feedbackID) => {
-        console.log("Modal opened!");
-        console.log("feedback ID:" + feedbackID);
         this.setState({ 
             confirmationModal: true,
             selectedID : feedbackID,
         });
     };
     
-    handleClose = () => {
+    handleConfirmationClose = () => {
         this.setState({ confirmationModal: false });
     };
 
     deleteMessage = () => {
-        console.log("TODO: delete from database");
+        this.showSnackbar('info','Deleting message...');
+        const id = this.state.selectedID;
         this.setState({ confirmationModal: false });
+        fetch(`${PCP_SERVER}/feedbacks/delete?feedbackID=${id}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.msg == 'success'){
+                this.showSnackbar('success','Message Deleted!');
+                this.getFeedbacks();
+            }
+        })
     };
 
-    componentDidMount(){
+// END OF PAGE OPERATIONS
+
+// SNACKBAR THINGS
+    showSnackbar(mode, message){
+        this.queue.push({
+            message,
+            mode,
+            key: new Date().getTime(),
+        });
+    
+        if (this.state.open) {
+          this.setState({ open: false });
+        } else {
+          this.processQueue();
+        }
+    }
+
+    processQueue = () => {
+        if (this.queue.length > 0) {
+          const msg = this.queue.shift();
+          this.setState({
+            snackbarMessage: msg.message,
+            snackbarMode : msg.mode,
+            open: true,
+          });
+        }
+    }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        this.setState({ open: false });
+    };
+
+    handleExited = () => {
+        this.processQueue();
+    };
+
+// END OF SNACKBAR THINGS
+
+    getFeedbacks(){
         fetch(`${PCP_SERVER}/feedbacks`)
         .then(response => response.json())
         .then(json => {
             console.log(json.res);
             this.setState({ messages : json.res });
         });
+    }
+
+    componentDidMount(){
+        this.getFeedbacks();
     }
 
     render(){
@@ -75,7 +138,7 @@ class Messages extends Component{
                                     <TableCell>
                                         {feedback.firstName}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell style={{ maxWidth : 300 , wordWrap : 'break-word'}}>
                                         {feedback.productName}
                                     </TableCell>
                                     <TableCell>
@@ -87,11 +150,11 @@ class Messages extends Component{
                     </TableBody>
                 </Table>
                 <Dialog
-                open={this.state.confirmationModal}
-                onClose={this.handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                >
+                    open={this.state.confirmationModal}
+                    onClose={this.handleConfirmationClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    >
                     <DialogTitle id="alert-dialog-title">{"Delete this message?"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
@@ -99,7 +162,7 @@ class Messages extends Component{
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleConfirmationClose} color="primary">
                             No
                         </Button>
                         <Button onClick={this.deleteMessage.bind(this)} color="secondary" autoFocus>
@@ -107,6 +170,22 @@ class Messages extends Component{
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={this.state.open}
+                    autoHideDuration={6000}
+                    onClose={this.handleClose}
+                    onExited={this.handleExited}
+                    >
+                    <SnackbarWrapper
+                        variant={this.state.snackbarMode}
+                        message={this.state.snackbarMessage}
+                        onClose={this.handleClose}
+                    />
+                </Snackbar>
             </AdminLayout>
         )
     }

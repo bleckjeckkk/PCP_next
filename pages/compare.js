@@ -48,11 +48,11 @@ class Compare extends Component {
         super(props);
         this.state = {
             user : { user : {}},
-            resultModalOpen: false,
             toBeComparedItems : [],
             results : [],
-            anchorEl : null,
-            missinganchorEl : null,
+            showMissingProductsModalOpen : false,
+            dialogItems : [],
+            dialogTitle : '',
         };
     }
   
@@ -71,6 +71,22 @@ class Compare extends Component {
         return Promise.all([this.getProductEquivalents(toBeCompared),this.getSupermarkets()])
     }
 
+    handleClose = value => {
+        this.setState({
+            showMissingProductsModalOpen: false,
+        });
+    };
+
+    showMissingProducts(missingProducts){
+        console.log("Show Missing Products");
+        console.log(missingProducts);
+        this.setState({
+            showMissingProductsModalOpen : true,
+            dialogItems : missingProducts,
+            dialogTitle : 'Missing Items'
+        });
+    }
+
     componentDidMount(){
         var user = window.sessionStorage.getItem('info');
         if (user === null){
@@ -86,6 +102,8 @@ class Compare extends Component {
         .then(([products,supermarkets])=>{
             var sprMkt = [];
             var prod = products.res.slice();
+            console.log({toBeCompared});
+            console.log({prod});
             supermarkets.res.map((item) => {
                 var totalAmount = 0;
                 var msng = [];
@@ -110,11 +128,20 @@ class Compare extends Component {
                 });
             });
             console.log(sprMkt);
-            sprMkt.sort(function(a, b){return b.total - a.total})
+            sprMkt.sort(function(a, b){return a.total - b.total})
             this.setState({ results : sprMkt });
         });
     }
     
+    componentWillUnmount(){
+        this.setState({
+            toBeComparedItems : [],
+            results : [],
+            showMissingProductsModalOpen : false,
+            dialogItems : [],
+            dialogTitle : '',
+        });
+    }
 
     render() {
         return (
@@ -138,7 +165,7 @@ class Compare extends Component {
                                 <TableRow>
                                     <TableCell>Supermarket</TableCell>
                                     <TableCell numeric>Total Price</TableCell>
-                                    <TableCell numeric>Missing</TableCell>
+                                    <TableCell numeric></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -156,7 +183,7 @@ class Compare extends Component {
                                     </TableCell>                
                                     <TableCell numeric>
                                         {row.missing.length > 0 ? (
-                                            <Button onClick={() => console.log("TODO: show missing products")}>
+                                            <Button onClick={() => this.showMissingProducts(row.missing)}>
                                                 <Warning style={{ color: amber[700]}}/>
                                                 {row.missing.length} missing
                                             </Button>
@@ -170,14 +197,54 @@ class Compare extends Component {
                         </Table>
                     </Paper>
                 </Grid>
-                <Grid item md={12}>
-                    <Typography variant="display1" style={{textAlign : 'center'}}>
-                        {isEmpty(this.state.results) ? ('') : (
-                        `Well done! You can save more at ${this.state.results[0].supermarketName}`
-                        )}
-                    </Typography>
-                </Grid>
+                {isEmpty(this.state.results) ? ('') : (
+                    <Grid item md={12}>
+                        <Grid container
+                            direction="column"
+                            justify="flex-start"
+                            alignItems="stretch"
+                            spacing={16}
+                            >
+                            <Grid item>
+                                <Typography variant="display1" style={{textAlign : 'center'}}>
+                                    { (this.state.results.length > 1 ? (
+                                            (this.state.results[0].total == this.state.results[1].total ? (
+                                                `Well done! You can't save money.`
+                                            ) : (
+                                                `Well done! You can save more at ${this.state.results[0].supermarketName}`
+                                            ))
+                                        ) : (
+                                            `Well done! You can save more at one and only ${this.state.results[0].supermarketName}`
+                                        ))}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography style={{ textAlign : 'center' }}>
+                                    <Button variant="outlined" color="primary" 
+                                        onClick={() => {
+                                            this.setState({
+                                                toBeComparedItems : [],
+                                                results : [],
+                                                showMissingProductsModalOpen : false,
+                                                dialogItems : [],
+                                                dialogTitle : '',
+                                            });
+                                            Router.push('/')
+                                        }}>
+                                        OK
+                                    </Button>
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                )}
             </Grid>
+            <ProductDialog
+                open={this.state.showMissingProductsModalOpen}
+                onClose={this.handleClose}
+                items={this.state.dialogItems}
+                title={this.state.dialogTitle}
+            />
         </Layout>
         );
     }
