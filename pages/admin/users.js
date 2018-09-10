@@ -13,18 +13,28 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
+    Snackbar,
 } from '@material-ui/core'
+import SnackbarWrapper from '../../components/Snackbar'
+
 import { PCP_SERVER } from '../../res/ImportantThings'
 
 class Users extends Component{
+
+    queue = [];
+
     constructor(props){
         super(props);
         this.state = {
             users : [],
             confirmationModal : false,
+            snackbarMessage : '',
+            snackbarMode : '',
+            open : false,
         }
     }
 
+// DIALOG OPERATIONS (DELETE COMFIRMATION)
     handleClickOpen = (userID) => {
         console.log("Modal opened!");
         console.log("user ID:" + userID);
@@ -34,16 +44,74 @@ class Users extends Component{
         });
     };
     
-    handleClose = () => {
+    handleConfirmationClose = () => {
         this.setState({ confirmationModal: false });
     };
+// END DIALOG OPERATIONS
 
+// CRUD OPERATIONS
     deleteItem = () => {
+        this.showSnackbar('info','Deleting entry...');
         console.log("TODO: delete from database");
         this.setState({ confirmationModal: false });
+        const userID = this.state.selectedID
+        fetch(`${PCP_SERVER}/users/delete?userID=${userID}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.msg == 'success'){
+                this.showSnackbar('success','Entry deleted successfully!');
+                this.getUsers();
+            }else{
+                this.showSnackbar('error','An error occured.');
+                console.error(response.res);
+            }
+        })
+    };
+// END CRUD OPERATIONS
+
+// SNACKBAR OPERATIONS
+    showSnackbar(mode, message){
+        this.queue.push({
+            message,
+            mode,
+            key: new Date().getTime(),
+        });
+
+        if (this.state.open) {
+        this.setState({ open: false });
+        } else {
+        this.processQueue();
+        }
+    }
+
+    processQueue = () => {
+        if (this.queue.length > 0) {
+        const msg = this.queue.shift();
+        this.setState({
+            snackbarMessage: msg.message,
+            snackbarMode : msg.mode,
+            open: true,
+        });
+        }
+    }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        this.setState({ open: false });
     };
 
+    handleExited = () => {
+        this.processQueue();
+    };
+// END SNACKBAR THINGS
+// COMPONENTDIDMOUNT AND THINGS
     componentDidMount(){
+        this.getUsers();
+    }
+
+    getUsers(){
         fetch(`${PCP_SERVER}/users`)
         .then(response => response.json())
         .then(json => {
@@ -51,6 +119,7 @@ class Users extends Component{
             this.setState({ users : json.res });
         });
     }
+// END COMPONENTDIDMOUNT AND THINGS
 
     render(){
         return(
@@ -88,7 +157,7 @@ class Users extends Component{
                 </Table>
                 <Dialog
                 open={this.state.confirmationModal}
-                onClose={this.handleClose}
+                onClose={this.handleConfirmationClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 >
@@ -99,7 +168,7 @@ class Users extends Component{
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleConfirmationClose} color="primary">
                             No
                         </Button>
                         <Button onClick={this.deleteItem.bind(this)} color="secondary" autoFocus>
@@ -107,6 +176,22 @@ class Users extends Component{
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={this.state.open}
+                    autoHideDuration={6000}
+                    onClose={this.handleClose}
+                    onExited={this.handleExited}
+                    >
+                    <SnackbarWrapper
+                        variant={this.state.snackbarMode}
+                        message={this.state.snackbarMessage}
+                        onClose={this.handleClose}
+                    />
+                </Snackbar>
             </AdminLayout>
         )
     }
