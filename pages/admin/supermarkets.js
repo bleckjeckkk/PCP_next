@@ -40,6 +40,7 @@ class Supermarkets extends Component{
         }
     }
 // DIALOG OPERATIONS (DELETE CONFIRMATION)
+
     handleClickOpen = (supermarketID) => {
         this.setState({ 
             confirmationModal: true,
@@ -50,6 +51,7 @@ class Supermarkets extends Component{
     handleConfirmationClose = () => {
         this.setState({ confirmationModal: false });
     };
+
 // FORM OPERATIONS (ADD/UPDATE FORM)
     onChange(event){
         console.log('onChange');
@@ -309,41 +311,6 @@ class Supermarkets extends Component{
                         value={this.state.address}
                     />
                 </FormWrapper>
-                {/*                 
-                <Dialog
-                    open={this.state.formOpen}
-                    onClose={this.handleFormClose}
-                    aria-labelledby="form-dialog-title"
-                    >
-                    <DialogTitle id="form-dialog-title">Supermarket Form</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            To add a supermarket, please enter the supermarket name and its address.
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Supermarket Name"
-                            fullWidth
-                        />
-                        <TextField
-                            margin="dense"
-                            id="address"
-                            label="Supermarket Address"
-                            fullWidth
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleFormClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={() => this.addSupermarket()} color="primary">
-                            Add
-                        </Button>
-                    </DialogActions>
-                </Dialog> */}
-
                 
                 <Snackbar
                     anchorOrigin={{
