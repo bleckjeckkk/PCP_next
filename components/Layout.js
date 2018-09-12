@@ -1,9 +1,11 @@
 import Header from './Header'
 import Head from 'next/head'
+import React, {Component} from 'react';
+import ReactDOM from "react-dom";
 
 const layoutStyle = {
   margin: 20,
-  padding: 20,
+  padding: 20
 }
 
 const Layout = (props) => (
@@ -14,7 +16,7 @@ const Layout = (props) => (
     left: 0,
     top: 0,
     zIndex: 10,
-    backgroundImage: "url('static/lmao.png')",
+    backgroundImage: "url('static/background.jpg')",
     backgroundSize : 'cover',
     }}>
     <Head>
