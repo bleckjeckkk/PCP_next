@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 
-import { 
+import {
     Button,
     TextField,
     Card,
     CardContent,
-    Typography, 
-    Grid, 
-    Paper, 
+    Typography,
+    Grid,
+    Paper,
     List,
-    ListItem, 
+    ListItem,
     ListItemAvatar,
     Avatar,
     ListItemText,
-    ListItemSecondaryAction, 
+    ListItemSecondaryAction,
     Collapse,
     TableRow,
     TableHead,
@@ -55,7 +55,7 @@ class Compare extends Component {
             dialogTitle : '',
         };
     }
-  
+
 
     getProductEquivalents(toBeCompared){
         return fetch(`${PCP_SERVER}/products/getProducts?products=${JSON.stringify(toBeCompared)}`)
@@ -96,7 +96,7 @@ class Compare extends Component {
         }
 
         this.setState({ user });
-        
+
         var toBeCompared = JSON.parse(localStorage.getItem('selectedItems'));
         this.getAll(toBeCompared)
         .then(([products,supermarkets])=>{
@@ -132,7 +132,7 @@ class Compare extends Component {
             this.setState({ results : sprMkt });
         });
     }
-    
+
     componentWillUnmount(){
         this.setState({
             toBeComparedItems : [],
@@ -159,7 +159,7 @@ class Compare extends Component {
                     </Typography>
                 </Grid>
                 <Grid item md={12}>
-                    <Paper style={{padding : 20}}>
+                    <Paper style={{padding : 20 , backgroundColor : `rgba(255,255,255,0.8)`}}>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -178,18 +178,18 @@ class Compare extends Component {
                                         </Button> */}
                                         {row.supermarketName}
                                     </TableCell>
-                                    <TableCell numeric>   
+                                    <TableCell numeric>
                                         <b>Php {row.total}</b>
-                                    </TableCell>                
+                                    </TableCell>
                                     <TableCell numeric>
                                         {row.missing.length > 0 ? (
                                             <Button onClick={() => this.showMissingProducts(row.missing)}>
                                                 <Warning style={{ color: amber[700]}}/>
                                                 {row.missing.length} missing
                                             </Button>
-                                        ):<div />}               
+                                        ):<div />}
                                     </TableCell>
-                                    
+
                                 </TableRow>
                                 );
                             })}
@@ -206,7 +206,7 @@ class Compare extends Component {
                             spacing={16}
                             >
                             <Grid item>
-                                <Typography variant="display1" style={{textAlign : 'center'}}>
+                                <Typography variant="display1" style={{textAlign : 'center' , color : 'white'}}>
                                     { (this.state.results.length > 1 ? (
                                             (this.state.results[0].total == this.state.results[1].total ? (
                                                 `Well done! You can't save money.`
@@ -220,7 +220,7 @@ class Compare extends Component {
                             </Grid>
                             <Grid item>
                                 <Typography style={{ textAlign : 'center' }}>
-                                    <Button variant="outlined" color="primary" 
+                                    <Button variant="outlined" color="primary"
                                         onClick={() => {
                                             this.setState({
                                                 toBeComparedItems : [],

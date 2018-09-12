@@ -227,7 +227,7 @@ class Index extends Component {
                 spacing={0}
                 >
                 <Grid item xs={12}>
-                    <Paper elevation={5}>
+                    <Paper elevation={5} style={{ backgroundColor : `rgba(255,255,255,0.8)`  }}>
                         <Grid container
                             direction="row"
                             justify="center"
@@ -279,7 +279,7 @@ class Index extends Component {
                         style={{ padding : 20 }}
                     >
                         <Grid item md={5}>
-                            <Paper elevation={5} style={{ padding : 20}}>
+                            <Paper elevation={5} style={{ padding : 20, backgroundColor : `rgba(255,255,255,0.8)` }}>
                                 <Grid container
                                     direction="column"
                                     justify="center"
@@ -301,7 +301,7 @@ class Index extends Component {
                             <span></span>
                         </Grid>
                         <Grid item md={6}>
-                            <Paper elevation={5} style={{ padding : 20}}>
+                            <Paper elevation={5} style={{ padding : 20, backgroundColor:`rgba(255,255,255,0.8)`}}>
                                 <Grid container
                                     direction="column"
                                     justify="center"
