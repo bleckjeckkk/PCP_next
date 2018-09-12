@@ -10,14 +10,17 @@ const layoutStyle = {
 
 const Layout = (props) => (
   <div style={{ 
-    position: 'fixed',
+    position : 'fixed',
     width: '100%',
     height: '100%',
-    left: 0,
-    top: 0,
-    zIndex: 10,
+    left: '0',
+    top: '0',
+    zIndex: '10',
     backgroundImage: "url('static/background.jpg')",
     backgroundSize : 'cover',
+    backgroundAttachment : 'fixed',
+    minHeight : '100%',
+    overflow : 'scroll',
     }}>
     <Head>
       {props.loading ? (
@@ -37,14 +40,16 @@ const Layout = (props) => (
         src="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
       />
     </Head>
-    {props.noHeader ? (
-        <div></div>
-      ) : (
-        <Header user={props.user}/>
-      )
-    }
-    <div style={layoutStyle}>
-      {props.children}
+    <div>
+      {props.noHeader ? (
+          <div></div>
+        ) : (
+          <Header user={props.user}/>
+        )
+      }
+      <div style={layoutStyle}>
+        {props.children}
+      </div>
     </div>
   </div>
 )

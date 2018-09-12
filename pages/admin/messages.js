@@ -139,7 +139,7 @@ class Messages extends Component{
                                         {feedback.firstName}
                                     </TableCell>
                                     <TableCell style={{ maxWidth : 300 , wordWrap : 'break-word'}}>
-                                        {feedback.productName}
+                                        {feedback.feedbackContent}
                                     </TableCell>
                                     <TableCell>
                                         <Button color="secondary" onClick={() => this.handleClickOpen(feedback.feedbackID)}>X</Button>

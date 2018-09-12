@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const app = express();
 
-const SELECT_ALL_SUPERMARKET_QUERY = 'SELECT * FROM supermarket';
+const SELECT_ALL_SUPERMARKET_QUERY = 'SELECT * FROM supermarket WHERE supermarket.supermarketID != 0';
 const SELECT_ALL_USER_QUERY ='SELECT userID, userName, firstName, lastName FROM user';
 
 const connection = mysql.createConnection({
@@ -72,7 +72,7 @@ app.get('/products/add', (req, res) => {
 //adding a user
 app.get('/users/add', (req, res) => {
   const { userID, userName, userPassword, firstName, lastName } = req.query;
-  
+
   const salt = 10;
   bcrypt.hash(userPassword, salt, function(err, hash) {
     if (err) {
@@ -121,9 +121,9 @@ app.get('/supermarkets/add', (req, res) => {
 
 //adding feedback
 app.get('/feedbacks/add', (req, res) => {
-  const {feedbackID, userID, productName, productID } = req.query;
-  const INSERT_FEEDBACKS_QUERY = `INSERT INTO feedback(feedbackID, userID, productName, productID)
-  VALUES (${feedbackID}, ${userID}, '${productName}', ${productID})`;
+  const {feedbackID, userID, feedbackContent, productID } = req.query;
+  const INSERT_FEEDBACKS_QUERY = `INSERT INTO feedback(feedbackID, userID, feedbackContent)
+  VALUES (NULL, ${userID}, '${feedbackContent}')`;
   connection.query(INSERT_FEEDBACKS_QUERY, (err, results) => {
     if (err) {
       return res.json({
@@ -171,28 +171,20 @@ app.get('/products/update', (req, res) => {
 
 //updates users
 app.get('/users/update', (req, res) => {
-  const { userID, userName, userPassword, firstName, lastName } = req.query;
-
-  const salt = 10;
-  bcrypt.hash(userPassword, salt, function(err, hash) {
-    if(err) {
-      return console.log(err);
+  const { userID, userName, firstName, lastName } = req.query;
+  const UPDATE_USERS_QUERY = `UPDATE user SET userName = '${userName}', firstName = '${firstName}', lastName = '${lastName}' WHERE userID = ${userID}`;
+  connection.query(UPDATE_USERS_QUERY, (err, results) => {
+    if (err) {
+      return res.json({
+        msg: 'error',
+        res : err
+      });
+    } else {
+      return res.json({
+        msg: 'success',
+        res : results
+      });
     }
-    const UPDATE_USERS_QUERY = `UPDATE user SET (userName, userPassword, firstName, lastName)
-    VALUES ('${userName}', '${hash}', '${firstName}', '${lastName}') WHERE userID = ${userID}`;
-    connection.query(UPDATE_USERS_QUERY, (err, results) => {
-      if (err) {
-        return res.json({
-          msg: 'error',
-          res : err
-        });
-      } else {
-        return res.json({
-          msg: 'success',
-          res : results
-        });
-      }
-    });
   });
 });
 
@@ -260,17 +252,29 @@ app.get('/products/delete', (req, res) => {
 //delete supermarkets
 app.get('/supermarkets/delete', (req, res) => {
   const{supermarketID} = req.query;
+  const DELETE_LINKED_PRODUCTS = `DELETE FROM product WHERE product.supermarketID = ${supermarketID}`;
   const DELETE_SUPERMARKETS_QUERY = `DELETE FROM supermarket WHERE supermarketID = ${supermarketID}`;
-  connection.query(DELETE_SUPERMARKETS_QUERY, (err, results) => {
+  console.log(DELETE_LINKED_PRODUCTS);
+  
+  connection.query(DELETE_LINKED_PRODUCTS, (err, results) => {
     if (err) {
       return res.json({
         msg: 'error',
         res : err
       });
     } else {
-      return res.json({
-        msg: 'success',
-        res : results
+      connection.query(DELETE_SUPERMARKETS_QUERY, (err, results) => {
+        if (err) {
+            return res.json({
+              msg: 'error',
+            res : err
+          });
+        } else {
+          return res.json({
+            msg: 'success',
+            res : results
+          });
+        }
       });
     }
   });
@@ -424,7 +428,7 @@ app.get('/supermarkets', (req, res) => {
 
 //gets all feedbacks in the database
 app.get('/feedbacks', (req, res) => {
-  connection.query('SELECT f.feedbackID, f.productName, usr.firstName FROM feedback f INNER JOIN user usr WHERE f.userID = usr.userID', (err, results) => {
+  connection.query('SELECT f.feedbackID, f.feedbackContent, usr.firstName FROM feedback f INNER JOIN user usr WHERE f.userID = usr.userID', (err, results) => {
     if (err) {
       return res.json({
         msg: 'error',
@@ -518,7 +522,7 @@ app.get('/users/auth', (req, res) => {
   connection.query(GET_USERS_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
-    } 
+    }
     try{
       bcrypt.compare(userPassword, results[0].userPassword, function(err, isCorrect) {
         if (err) {
@@ -555,7 +559,7 @@ app.get('/users/check', (req, res) => {
   connection.query(GET_USERS_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
-    } 
+    }
     try{
       if(isEmpty(results)){
         return res.json({

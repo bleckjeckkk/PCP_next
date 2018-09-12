@@ -273,10 +273,12 @@ class Supermarkets extends Component{
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             Are you sure you want to delete this supermarket?
+                            <br />
+                            <b>This will also delete ALL products assigned to this supermarket</b>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleConfirmationClose} color="primary">
                             No
                         </Button>
                         <Button onClick={this.deleteItem.bind(this)} color="secondary" autoFocus>

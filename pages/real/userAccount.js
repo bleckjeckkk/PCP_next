@@ -162,8 +162,7 @@ class Index extends Component {
             return;
         }
         this.showSnackbar('info', 'Sending Feedback');
-        fetch(`${PCP_SERVER}/feedbacks/add?feedbackID=${this.state.lastFeedbackID}&userID=${this.state.user.user.id}&productName=${this.state.feedback}&productID=0
-        `)
+        fetch(`${PCP_SERVER}/feedbacks/add?feedbackID=${this.state.lastFeedbackID}&userID=${this.state.user.user.id}&feedbackContent=${this.state.feedback}`)
         .then(response => response.json())
         .then(response => {
             if(response.msg == 'success'){

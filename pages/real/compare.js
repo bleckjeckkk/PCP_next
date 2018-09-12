@@ -77,6 +77,15 @@ class Compare extends Component {
         });
     };
 
+    showSelectedProducts(){
+        console.log(this.state.myProducts);
+        this.setState({
+            showMissingProductsModalOpen : true,
+            dialogItems : this.state.myProducts,
+            dialogTitle : 'Product List'
+        });
+    };
+
     showAllProducts(products){
         console.log(products);
         this.setState({
@@ -118,14 +127,30 @@ class Compare extends Component {
                 var msng = [];
                 var avail = [];
                 prod.map((product) => {
-                    if(product.p_marketID == item.supermarketID){
+                    if(product.p_marketID == item.supermarketID && (product.p_availability)){
                         totalAmount += product.p_price;
-                        avail.push(product);
-                    }else if(product.matched_marketID == item.supermarketID){
+                        const p = {
+                            p_ID: product.p_ID,
+                            p_name: product.p_name,
+                            p_price : product.p_price,
+                        };
+                        avail.push(p);
+                    }else if(product.matched_marketID == item.supermarketID && (product.matched_availability)){
                         totalAmount += product.matched_price;
-                        avail.push(product);
+                        const p = {
+                            p_ID: product.matched_ID,
+                            p_name: product.matched_name,
+                            p_price : product.matched_price,
+                        };
+                        avail.push(p);
                     }else{
-                        msng.push(product);
+                        const missing = product.matched_marketID == item.supermarketID;
+                        const p = {
+                            p_ID: product.p_ID,
+                            p_name: `${missing ? (`[Not available] ${product.p_name}`) :(product.p_name) }`,
+                            p_price : product.p_price,
+                        };
+                        msng.push(p);
                     }
                 });
                 sprMkt.push({
@@ -136,9 +161,9 @@ class Compare extends Component {
                     available : avail,
                 });
             });
-            console.log(sprMkt);
+            console.log({sprMkt});
             sprMkt.sort(function(a, b){return a.total - b.total})
-            this.setState({ results : sprMkt });
+            this.setState({ results : sprMkt , myProducts : prod});
         });
     }
 
@@ -166,6 +191,11 @@ class Compare extends Component {
                     <Typography variant="display3" style={{textAlign : 'center'}}>
                         PRICE CHECKER PROGRAM
                     </Typography>
+                </Grid>
+                <Grid item md={12}>
+                    <Button onClick={() => this.showSelectedProducts()} variant="outlined" color="primary" style={{backgroundColor : '#299ea7', color : 'white' }}>
+                        ITEM LIST
+                    </Button>
                 </Grid>
                 <Grid item md={12}>
                     <Paper style={{padding : 20 , backgroundColor : `rgba(255,255,255,0.8)`}}>
