@@ -1,13 +1,23 @@
 import Header from './Header'
 import Head from 'next/head'
+import React, {Component} from 'react';
+import ReactDOM from "react-dom";
 
 const layoutStyle = {
   margin: 20,
-  padding: 20,
+  padding: 20
 }
 
 const Layout = (props) => (
-  <div style={{ margin : '-8px'}}>
+  <div style={{
+    position: 'fixed',
+    margin : '-8px',
+    height: '100%',
+    width: '100%',
+    zindex: 10,
+    backgroundImage: "url('static/background.jpg')",
+    backgroundSize: 'cover',
+  }}>
     <Head>
       <title>PCP {props.page ? `| ${props.page}` : ''}</title>
       <meta charSet="utf-8" />
