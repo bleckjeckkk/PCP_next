@@ -220,7 +220,7 @@ class Compare extends Component {
                             </Grid>
                             <Grid item>
                                 <Typography style={{ textAlign : 'center' }}>
-                                    <Button variant="outlined" color="primary"
+                                    <Button variant="outlined" color="primary" style={{backgroundColor : '#299ea7', color : 'white' }}
                                         onClick={() => {
                                             this.setState({
                                                 toBeComparedItems : [],
