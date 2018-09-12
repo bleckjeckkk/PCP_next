@@ -16,6 +16,7 @@ class About extends Component{
         return (
             <Layout noHeader loading>
                 <CircularProgress />
+                Loading...
             </Layout>
         );
     }

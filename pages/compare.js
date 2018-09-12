@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { Grid, Typography } from '@material-ui/core'
-
 import Router from 'next/router'
 import Layout from '../components/Layout'
 import {

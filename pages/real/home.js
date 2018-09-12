@@ -135,7 +135,7 @@ class Home extends Component {
                     </Typography>
                 </Grid>
                 <Grid item md={12}>
-                    <Paper style={{padding : 20, backgroundColor : `rgba(255,255,255,0.2)`}}>
+                    <Paper style={{padding : 20, backgroundColor : `rgba(255,255,255,0.8)`}}>
                         <Grid container
                             direction="row"
                             justify="center"
