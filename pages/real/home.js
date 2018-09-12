@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Layout from '../components/Layout';
 
 import { 
     Button,
@@ -22,9 +21,10 @@ import {
 
 import Router from 'next/router'
 
-import ProductDialog from '../components/ProductDialog'
+import ProductDialog from '../../components/ProductDialog'
+import Layout from '../../components/Layout'
 
-import { PCP_SERVER } from '../res/ImportantThings'
+import { PCP_SERVER } from '../../res/ImportantThings'
 
 function isEmpty(obj) {
     for(var key in obj) {
@@ -42,7 +42,7 @@ class Home extends Component {
             prevText : '',
             user : { user : {}},
             resultModalOpen: false,
-            queriedItems : [{ id : 0 , email: 'username@gmail.com' }, {id : 1 , email:'user02@gmail.com' }],
+            queriedItems : [],
             selectedItems : [],
         };
     }
@@ -97,6 +97,7 @@ class Home extends Component {
             user = JSON.parse(user)
         }
         this.setState({ user });
+        Router.prefetch('/compare');
     }
 
     handleClick(){
@@ -134,7 +135,7 @@ class Home extends Component {
                     </Typography>
                 </Grid>
                 <Grid item md={12}>
-                    <Paper style={{padding : 20}}>
+                    <Paper style={{padding : 20, backgroundColor : `rgba(255,255,255,0.2)`}}>
                         <Grid container
                             direction="row"
                             justify="center"
@@ -234,7 +235,8 @@ class Home extends Component {
                                             </div>
                                             ) : (
                                                 <Button color="primary" variant="contained" onClick={() => this.saveList()}>SAVE</Button>
-                                            )}
+                                            )
+                                        }
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -246,6 +248,7 @@ class Home extends Component {
                 open={this.state.resultModalOpen}
                 onClose={this.handleClose}
                 items={this.state.queriedItems}
+                showSupermarket={true}
             />
         </Layout>
         );

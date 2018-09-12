@@ -7,9 +7,22 @@ const layoutStyle = {
 }
 
 const Layout = (props) => (
-  <div style={{ margin : '-8px'}}>
+  <div style={{ 
+    position: 'fixed',
+    width: '100%',
+    height: '100%',
+    left: 0,
+    top: 0,
+    zIndex: 10,
+    backgroundImage: "url('static/lmao.png')",
+    backgroundSize : 'cover',
+    }}>
     <Head>
-      <title>PCP {props.page ? `| ${props.page}` : ''}</title>
+      {props.loading ? (
+        <title>Loading...</title>
+      ) : (
+        <title>PCP {props.page ? `| ${props.page}` : ''}</title>
+      )}
       <meta charSet="utf-8" />
       {/* Use minimum-scale=1 to enable GPU rasterization */}
       <meta
@@ -19,10 +32,15 @@ const Layout = (props) => (
       {/* PWA primary color */}
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+        src="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
       />
     </Head>
-    <Header user={props.user}/>
+    {props.noHeader ? (
+        <div></div>
+      ) : (
+        <Header user={props.user}/>
+      )
+    }
     <div style={layoutStyle}>
       {props.children}
     </div>

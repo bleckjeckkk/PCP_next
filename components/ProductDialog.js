@@ -42,7 +42,12 @@ class ProductDialog extends React.Component {
                             {item.p_ID}
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={item.p_name} secondary={`Php ${item.p_price} [${item.p_market}]`}/>
+                      {this.props.showSupermarket ? (
+                        <ListItemText primary={item.p_name} secondary={`Php ${item.p_price} [${item.p_market}]`}/>
+                      ) : (
+                        <ListItemText primary={item.p_name} secondary={`Php ${item.p_price}`}/>
+                      )}
+                      
                     </ListItem>
                   ),this)
                 ) : (
