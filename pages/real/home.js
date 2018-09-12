@@ -191,7 +191,6 @@ class Home extends Component {
                                                     </ListItemAvatar>
                                                     <ListItemText
                                                         primary={item.p_name}
-                                                        secondary={`${item.p_price} -- ${item.p_market}`}
                                                     />
                                                     <ListItemSecondaryAction>
                                                         <Button color="secondary" onClick={() => this.removeFromList(item)}>X</Button>    

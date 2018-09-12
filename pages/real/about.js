@@ -47,18 +47,7 @@ class About extends Component{
                         </Typography>   
                         <Typography variant="body2">
                             Unfortunately, it downloaded the entire database everytime it ran, then the school WiFi made it worse, and gave him 30 seconds of boot up time. Ironic. It could save others from failure, but not itself.
-                        </Typography>   
-                        <br />
-                        <br />
-                        <Typography variant="body2">
-                        Android. WebApp. Desktop. iOS. Long ago, the four platforms lived together in harmony. Then, everything changed when the WebApp Nation attacked. 
-                        </Typography>
-                        <Typography variant="body2">
-                        Only the Avatar, master of all four elements, could stop them, but when the world needed him most, he vanished. 
-                        </Typography>
-                        <Typography variant="body2">
-                        A hundred years passed and my brother and I discovered the new Avatar, a language named JavaScript. And although his airbending skills are great, he has a lot to learn before he's ready to save anyone. But I believe JavaScript can save the world.
-                        </Typography>
+                        </Typography>  
                     </Grid>
                 </Grid>
             </Paper>

@@ -77,6 +77,15 @@ class Compare extends Component {
         });
     };
 
+    showAllProducts(products){
+        console.log(products);
+        this.setState({
+            showMissingProductsModalOpen : true,
+            dialogItems : products,
+            dialogTitle : 'Items in Supermarket'
+        });
+    };
+
     showMissingProducts(missingProducts){
         console.log("Show Missing Products");
         console.log(missingProducts);
@@ -173,10 +182,10 @@ class Compare extends Component {
                                 return (
                                 <TableRow key={row.supermarketID}>
                                     <TableCell component="th" scope="row">
-                                        {/* <Button onClick={() => console.log("TODO: show list of products")}>
-                                            show list
-                                        </Button> */}
-                                        {row.supermarketName}
+                                        <Button onClick={() => this.showAllProducts(row.available)}>
+                                            List
+                                        </Button>
+                                        {`   ${row.supermarketName}`}
                                     </TableCell>
                                     <TableCell numeric>
                                         <b>Php {row.total}</b>
@@ -211,7 +220,11 @@ class Compare extends Component {
                                             (this.state.results[0].total == this.state.results[1].total ? (
                                                 `Well done! You can't save money.`
                                             ) : (
-                                                `Well done! You can save more at ${this.state.results[0].supermarketName}`
+                                                this.state.results[0].missing.length==0 ? (
+                                                    `Well done! You can save more at ${this.state.results[0].supermarketName}.`
+                                                ) : (
+                                                    `Well done! You can save more at ${this.state.results[0].supermarketName}. But there are missing items.`
+                                                )
                                             ))
                                         ) : (
                                             `Well done! You can save more at one and only ${this.state.results[0].supermarketName}`

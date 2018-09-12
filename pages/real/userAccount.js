@@ -238,7 +238,7 @@ class Index extends Component {
                                     justify="center"
                                     alignItems="center"
                                 >
-                                    Photo Here
+                                    <img src="static/user.png" />
                                 </Grid>
                             </Grid>
                             <Grid item sm={10} xs={12}>
@@ -250,7 +250,7 @@ class Index extends Component {
                                 >
                                     <Grid item xs={12}>
                                         <Typography variant="display2">
-                                            User Account
+                                            {`${this.state.user.user.firstName} ${this.state.user.user.lastName} `}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={12}>
