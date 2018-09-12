@@ -141,7 +141,7 @@ class Index extends Component {
         .then(response => {
           console.log({response});
           if(response.msg == 'success'){
-            this.showSnackbar('success', 'Entry updated');
+            this.showSnackbar('success', 'Information Updated. Log out to apply changes.');
           }else{
             this.showSnackbar('error','An error occured. Please try again.');
             console.error(response.res);

@@ -39,6 +39,15 @@ class Products extends Component{
         this.setState({ confirmationModal: false });
     };
 
+    addItem = () => {
+        console.log("TODO: add to database");
+    };
+
+    editItem = () => {
+        console.log("TODO: edit product in database");
+
+    };
+
     deleteItem = () => {
         console.log("TODO: delete from database");
         this.setState({ confirmationModal: false });
