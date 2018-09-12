@@ -3,8 +3,8 @@ import Link from 'next/link'
 import Router from 'next/router'
 import Layout from '../../components/Layout'
 import SnackbarWrapper from '../../components/Snackbar'
-import { 
-    Paper, 
+import {
+    Paper,
     Typography,
     TextField,
     Button,
@@ -20,7 +20,7 @@ import { PCP_SERVER } from '../../res/ImportantThings'
 class Login extends Component {
 
     queue = [];
-    
+
     constructor(props){
         super(props)
         this.state = {
@@ -105,8 +105,8 @@ class Login extends Component {
 
     signup(){
         this.showSnackbar('info',"Registering user...");
-                
-        const credentials = { 
+
+        const credentials = {
             firstName : this.state.fName,
             lastName : this.state.lName,
             username : this.state.signin_username,
@@ -166,7 +166,7 @@ class Login extends Component {
         .then(response => {
             if(response.msg === 'success'){
                 this.showSnackbar('success',"User Successfully Registered!");
-                this.setState({ 
+                this.setState({
                     signin_username : '',
                     signin_password : '',
                     fName : '',
@@ -192,7 +192,7 @@ class Login extends Component {
             mode,
             key: new Date().getTime(),
         });
-    
+
         if (this.state.open) {
           this.setState({ open: false });
         } else {
@@ -233,7 +233,7 @@ class Login extends Component {
                 >
                 {/*Login form*/}
                 <Grid item xs={12}>
-                    <Paper style={{padding: 20}}>
+                    <Paper style={{padding : 20, backgroundColor : `rgba(255,255,255,0.8)`}}>
                         <Grid
                             container
                             direction="row"
@@ -261,13 +261,13 @@ class Login extends Component {
                                 />
                             </Grid>
                             <Grid item>
-                                    <Button variant="contained" onClick={this.auth.bind(this)}>Login</Button> 
+                                    <Button variant="contained" onClick={this.auth.bind(this)}>Login</Button>
                             </Grid>
                         </Grid>
                     </Paper>
                 </Grid>
                 {/*Sign Up form*/}
-                <Grid 
+                <Grid
                     container
                     direction="row"
                     justify="space-between"
@@ -279,13 +279,13 @@ class Login extends Component {
                             direction="column"
                             justify="center"
                             alignItems="center"
-                            > 
+                            >
                             picture of a shopping cart here
                         </Grid>
                     </Grid>
                     <Grid item xs = {6}>
-                        <Paper style={{padding : 20}}>
-                            <Grid 
+                        <Paper style={{padding : 20, backgroundColor : `rgba(255,255,255,0.8)`}}>
+                            <Grid
                                 container
                                 direction="column"
                                 justify="center"
