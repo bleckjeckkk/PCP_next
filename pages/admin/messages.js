@@ -106,7 +106,6 @@ class Messages extends Component{
         fetch(`${PCP_SERVER}/feedbacks`)
         .then(response => response.json())
         .then(json => {
-            console.log(json.res);
             this.setState({ messages : json.res });
         });
     }

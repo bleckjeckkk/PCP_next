@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import { Typography, Grid, Paper, Snackbar } from '@material-ui/core'
+import { Typography, Grid, Paper, Snackbar, List, ListItem, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, Collapse } from '@material-ui/core'
 
 import Router from 'next/router'
 import Layout from '../../components/Layout'
@@ -14,6 +14,14 @@ import FormWrapper from '../../components/Form'
 import SnackbarWrapper from '../../components/Snackbar'
 
 const CHAR_LIMIT = 120;
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
 
 class Index extends Component {
     queue = [];
@@ -27,20 +35,46 @@ class Index extends Component {
             snackbarMode : '',
             snackbarMessage : '',
             open : false,
-            formOpen : false
+            formOpen : false,
+            usr : {},
+            favItemsParsed : [],
         };
     }
 
     componentDidMount(){
+        this.getLatestInfo();
+        this.getMaxID();
+    }
+
+    getLatestInfo(){
         var user = window.sessionStorage.getItem('info');
+        var usr = {};
         if (user === null){
             user = { user : {}}
         }else{
-            user = JSON.parse(user)
+            user = JSON.parse(user);
+            fetch(`${PCP_SERVER}/users/info?id=${user.user.id}`)
+            .then(response => response.json())
+            .then(response => {
+                usr = response.user;
+                this.getProducts(JSON.parse(response.user.favItems));
+                this.setState({ 
+                    favItems : response.user.favItems,
+                    usr,
+                    user,
+                });
+            });
         }
-        this.getMaxID();
-        this.setState({ user });
-        console.log({user});
+    }
+
+    getProducts(items){
+        fetch(`${PCP_SERVER}/products/getProducts?products=${JSON.stringify(items)}`)
+        .then(response => response.json())
+        .then(response => {
+            this.setState({
+                favItemsParsed : response.res,
+            });
+        });
     }
 
     getMaxID(){
@@ -49,12 +83,7 @@ class Index extends Component {
         .then(json => {
             const next = json.res[0].count + 1;
             this.setState({ lastFeedbackID : next});
-            console.log(next);
         });
-    }
-
-    handleClick(){
-        localStorage.setItem('key', this.state.text);
     }
 
     onFeedbackChange(event){
@@ -70,7 +99,6 @@ class Index extends Component {
     }
 
     handleFormOpen = (userUpdate, value) => {
-      console.log({userUpdate, value});
       switch(userUpdate){
         case 'firstName': this.setState({
                                         formOpen : true,
@@ -108,38 +136,35 @@ class Index extends Component {
         this.showSnackbar('info','Updating entry...');
         this.handleFormClose();
         const {user} = this.state.user;
-        console.log({user});
         var u = {
           id : user.id
         };
         switch(this.state.attribute){
           case 'firstName': u = {
-                                              id:user.id,
-                                              firstName : this.state.text,
-                                              lastName : user.lastName,
-                                              username: user.userName
-                                            }
-                                          break;
+                                    id:user.id,
+                                    firstName : this.state.text,
+                                    lastName : user.lastName,
+                                    username: user.userName
+                                }
+                                break;
           case 'lastName': u = {
-                                              id:user.id,
-                                              firstName : user.firstName,
-                                              lastName : this.state.text,
-                                              username: user.userName
-                                            }
-                                          break;
+                                    id:user.id,
+                                    firstName : user.firstName,
+                                    lastName : this.state.text,
+                                    username: user.userName
+                                }
+                                break;
           case 'username': u = {
-                                              id:user.id,
-                                              firstName : user.firstName,
-                                              lastName : user.lastName,
-                                              username: this.state.text
-                                            }
-                                          break;
+                                    id:user.id,
+                                    firstName : user.firstName,
+                                    lastName : user.lastName,
+                                    username: this.state.text
+                                }
+                                break;
         }
-        console.log({u});
         fetch(`${PCP_SERVER}/users/update?userID=${u.id}&firstName=${u.firstName}&lastName=${u.lastName}&userName=${u.username}`)
         .then(response => response.json())
         .then(response => {
-          console.log({response});
           if(response.msg == 'success'){
             this.showSnackbar('success', 'Information Updated. Log out to apply changes.');
           }else{
@@ -147,7 +172,10 @@ class Index extends Component {
             console.error(response.res);
           }
         })
-        .catch((e)=> console.log(e))
+        .catch((e)=> {
+            this.showSnackbar('error','An error occured. Please try again.');
+            console.error(e);
+        })
         this.setState({text : ''});
         switch(this.state.attribute){
           case 'username' : this.logout();
@@ -172,10 +200,9 @@ class Index extends Component {
                 this.showSnackbar('error', `Error ${response.res.code}`);
                 this.setState({ feedback : '' });
             }
-            console.log(response);
             this.getMaxID();
         })
-        .catch(err => {console.log(err);})
+        .catch(err => {console.error(err);})
 
     }
 
@@ -215,6 +242,15 @@ class Index extends Component {
         this.processQueue();
     };
 
+    removeFromList = (product) => {
+        var temp = this.state.favItemsParsed.slice();
+        const index = temp.indexOf(product);
+        temp.splice(index,1);
+        this.setState({
+            favItemsParsed : temp, 
+        });
+    };
+
     render() {
         return (
         <Layout user={this.state.user.user}>
@@ -249,7 +285,7 @@ class Index extends Component {
                                 >
                                     <Grid item xs={12}>
                                         <Typography variant="display2">
-                                            {`${this.state.user.user.firstName} ${this.state.user.user.lastName} `}
+                                            {`${this.state.usr.firstName} ${this.state.usr.lastName}`}
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={12}>
@@ -259,9 +295,9 @@ class Index extends Component {
                                             alignItems="center"
                                             style={{ padding : 20 }}
                                         >
-                                            <Button variant="contained" onClick={() => this.handleFormOpen('firstName', this.state.user.user.firstName)}>{this.state.user.user.firstName}</Button>
-                                            <Button variant="contained" onClick={() => this.handleFormOpen('lastName', this.state.user.user.lastName)}>{this.state.user.user.lastName}</Button>
-                                            <Button variant="contained" onClick={() => this.handleFormOpen('username', this.state.user.user.userName)}>{this.state.user.user.userName}</Button>
+                                            <Button variant="contained" onClick={() => this.handleFormOpen('firstName', this.state.usr.firstName)}>{this.state.usr.firstName}</Button>
+                                            <Button variant="contained" onClick={() => this.handleFormOpen('lastName', this.state.usr.lastName)}>{this.state.usr.lastName}</Button>
+                                            <Button variant="contained" onClick={() => this.handleFormOpen('username', this.state.usr.userName)}>{this.state.usr.userName}</Button>
                                             <Button variant="contained" color="secondary" onClick={() => this.logout()}> Log Out </Button>
                                         </Grid>
                                     </Grid>
@@ -283,16 +319,82 @@ class Index extends Component {
                                     direction="column"
                                     justify="center"
                                     alignItems="center"
+                                    spacing={16}
                                     >
-                                    <Typography variant="display1">
-                                        FAVORITE LIST
-                                    </Typography>
-                                    <Typography variant="display1">
-                                    <div style={{ height : 300 , width : 300}}>
-                                        TABLE HERE
-                                    </div>
-                                    </Typography>
-                                    <Button variant="contained">Compare</Button>
+                                    <Grid item>
+                                        <Typography variant="display1">
+                                            FAVORITE LIST
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Collapse in={!isEmpty(this.state.favItemsParsed)}>
+                                            <div style={{ height : 300 , width : 300}}>
+                                                <Paper style={{ maxHeight : 200  , overflowY : 'auto' , padding : 20}}>
+                                                    <List style={{ maxHeight : 200 }}>
+                                                    {this.state.favItemsParsed.map( item => {
+                                                        return(
+                                                            <ListItem key={item.p_ID}>
+                                                                <ListItemAvatar>
+                                                                    <Avatar>
+                                                                        {item.p_ID}
+                                                                    </Avatar>
+                                                                </ListItemAvatar>
+                                                                <ListItemText
+                                                                    primary={item.p_name}
+                                                                />
+                                                                <ListItemSecondaryAction>
+                                                                    <Button color="secondary" onClick={() => this.removeFromList(item)}>X</Button>    
+                                                                </ListItemSecondaryAction>
+                                                            </ListItem>
+                                                        )
+                                                    },this)}
+                                                    </List>
+                                                </Paper>
+                                            </div>
+                                        </Collapse>
+                                    </Grid>
+                                    <Grid item>
+                                        <Grid container
+                                            direction="row"
+                                            spacing={16}
+                                            >
+                                            <Grid item>
+                                                <Button variant="contained" 
+                                                    disabled={isEmpty(this.state.favItemsParsed)}
+                                                    onClick={() => {
+                                                        const temp = this.state.favItemsParsed.slice();
+                                                        var items = [];
+                                                        temp.map( (item) => {
+                                                            items.push(item.p_ID);
+                                                        });
+                                                        fetch(`${PCP_SERVER}/users/updateFav?userID=${this.state.user.user.id}&favItems=${JSON.stringify(items)}`)
+                                                        .then(response => response.json())
+                                                        .then(response => {
+                                                            if(response.msg == 'success'){
+                                                                this.showSnackbar('success','List Saved!');
+                                                            }
+                                                        });
+                                                    }}>
+                                                    SAVE
+                                                </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button variant="contained" 
+                                                    disabled={isEmpty(this.state.favItemsParsed)}
+                                                    onClick={() => {
+                                                        const temp = this.state.favItemsParsed.slice();
+                                                        var items = [];
+                                                        temp.map( (item) => {
+                                                            items.push(item.p_ID);
+                                                        });
+                                                        localStorage.setItem('selectedItems', JSON.stringify(items));
+                                                        Router.push('/compare');
+                                                    }}>
+                                                    COMPARE
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </Paper>
                         </Grid>

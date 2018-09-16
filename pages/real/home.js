@@ -16,11 +16,13 @@ import {
     ListItemSecondaryAction, 
     Collapse,
     Popover,
-    Tooltip
+    Tooltip,
+    Snackbar,
 } from '@material-ui/core';
 
 import Router from 'next/router'
 
+import SnackbarWrapper from '../../components/Snackbar'
 import ProductDialog from '../../components/ProductDialog'
 import Layout from '../../components/Layout'
 
@@ -35,6 +37,9 @@ function isEmpty(obj) {
 }
 
 class Home extends Component {
+
+    queue = [];
+
     constructor(props){
         super(props);
         this.state = {
@@ -47,6 +52,44 @@ class Home extends Component {
         };
     }
   
+// SNACKBAR THINGS
+    showSnackbar(mode, message){
+        this.queue.push({
+            message,
+            mode,
+            key: new Date().getTime(),
+        });
+
+        if (this.state.open) {
+        this.setState({ open: false });
+        } else {
+        this.processQueue();
+        }
+    }
+
+    processQueue = () => {
+        if (this.queue.length > 0) {
+        const msg = this.queue.shift();
+        this.setState({
+            snackbarMessage: msg.message,
+            snackbarMode : msg.mode,
+            open: true,
+        });
+        }
+    }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        this.setState({ open: false });
+    };
+
+    handleExited = () => {
+        this.processQueue();
+    };
+
+// END OF SNACKBAR THINGS
     removeFromList = (product) => {
         var temp = this.state.selectedItems.slice();
         const index = temp.indexOf(product);
@@ -58,16 +101,14 @@ class Home extends Component {
     };
 
     handleClickOpen = () => {
-        console.log(`${PCP_SERVER}/products/find?productName=${this.state.text}`);
         fetch(`${PCP_SERVER}/products/find?productName=${this.state.text}`)
         .then(response => response.json())
         .then(json => {
-            console.log(json);
             this.setState({ queriedItems : json.res, resultModalOpen:true });
         });
     };
     
-    handleClose = value => {
+    handleDialogClose = value => {
         if(isEmpty(value)){
             this.setState({
                 resultModalOpen: false,
@@ -81,6 +122,8 @@ class Home extends Component {
         });
         if(!found){
             temp.push(value);
+        }else{
+            this.showSnackbar('error','The product (or equivalent) is already in your list.');
         }
         this.setState({
             resultModalOpen: false,
@@ -110,13 +153,28 @@ class Home extends Component {
         });
     }
 
-    saveList(){
+    saveListLocal(){
         const temp = this.state.selectedItems.slice();
         var items = [];
         temp.map( (item) => {
             items.push(item.p_ID);
         });
         localStorage.setItem('selectedItems', JSON.stringify(items));
+    }
+
+    saveList(){
+        const temp = this.state.selectedItems.slice();
+        var items = [];
+        temp.map( (item) => {
+            items.push(item.p_ID);
+        });
+        fetch(`${PCP_SERVER}/users/updateFav?userID=${this.state.user.user.id}&favItems=${JSON.stringify(items)}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.msg == 'success'){
+                this.showSnackbar('success','List Saved!');
+            }
+        });
     }
     
     render() {
@@ -215,7 +273,7 @@ class Home extends Component {
                                     <Grid item>
                                         <Button color="primary" variant="contained" 
                                             onClick={() => {
-                                                this.saveList();
+                                                this.saveListLocal();
                                                 Router.push('/compare');
                                             }}>
                                             COMPARE
@@ -245,10 +303,26 @@ class Home extends Component {
             </Grid>
             <ProductDialog
                 open={this.state.resultModalOpen}
-                onClose={this.handleClose}
+                onClose={this.handleDialogClose}
                 items={this.state.queriedItems}
                 showSupermarket={true}
             />
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                open={this.state.open}
+                autoHideDuration={6000}
+                onClose={this.handleClose}
+                onExited={this.handleExited}
+                >
+                <SnackbarWrapper
+                    variant={this.state.snackbarMode}
+                    message={this.state.snackbarMessage}
+                    onClose={this.handleClose}
+                />
+            </Snackbar>
         </Layout>
         );
     }

@@ -53,7 +53,6 @@ class Supermarkets extends Component{
 
 // FORM OPERATIONS (ADD/UPDATE FORM)
     onChange(event){
-        console.log('onChange');
         this.setState({ [event.target.id] : event.target.value });
     }
 
@@ -88,12 +87,7 @@ class Supermarkets extends Component{
             name : this.state.name,
             address : this.state.address,
         }
-        console.group("Add");
-        console.log("to be added: ");
-        console.log({market});
-        console.groupEnd();
-
-        
+                
         fetch(`${PCP_SERVER}/supermarkets/add?supermarketID=${market.id}&supermarketName=${market.name}&supermarketAddress=${market.address}`)
         .then(response => response.json())
         .then(response => {
@@ -197,9 +191,7 @@ class Supermarkets extends Component{
         fetch(`${PCP_SERVER}/supermarkets`)
         .then(response => response.json())
         .then(json => {
-            console.log(json.res);
             this.setState({ supermarkets : json.res });
-            console.log(json.res);
         });
     }
 
@@ -209,7 +201,6 @@ class Supermarkets extends Component{
         .then(json => {
             const next = json.res[0].count + 1;
             this.setState({ id : next});
-            console.log(next);
         });
     }
 

@@ -50,8 +50,6 @@ class Products extends Component{
     }
 
     handleClickOpen = (productID) => {
-        console.log("Modal opened!");
-        console.log("product ID:" + productID);
         this.setState({ 
             confirmationModal: true,
             selectedID : productID,
@@ -60,28 +58,22 @@ class Products extends Component{
     
 
     onChange(event){
-        console.log('onChange');
         this.setState({ [event.target.id] : event.target.value });
     };
 
     onSupermarketChange(event){
-        console.log('onChange');
-        console.log(event.target.value);
         this.setState({
             supID : event.target.value
         });
     };
 
     onMatchChange(event){
-        console.log('onChange');
-        console.log(event.target.value);
         this.setState({
             match : event.target.value
         });
     };
 
     onCheckChange(){
-        console.log('onChange');
         const newVal = Math.abs(this.state.availability - 1)
         this.setState({
             availability : newVal
@@ -89,7 +81,6 @@ class Products extends Component{
     };
 
     handleFormOpen = (p) => {
-        console.log({p});
         this.getMatches();
         this.getNextID();
         p ? 
@@ -270,11 +261,9 @@ class Products extends Component{
             return;
         }
         const search = str.split(' ')[0];
-        console.log({search});
         fetch(`${PCP_SERVER}/products/find?productName=${search}`)
         .then(response => response.json())
         .then(json => {
-            console.log(json);
             if(json.res.length > 0){
                 this.setState({ possibleMatches : json.res });
             }else{
@@ -301,9 +290,7 @@ class Products extends Component{
         fetch(`${PCP_SERVER}/supermarkets`)
         .then(response => response.json())
         .then(json => {
-            console.log(json.res);
             this.setState({ supermarkets : json.res });
-            console.log(json.res);
         });
     }
 

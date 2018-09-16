@@ -78,7 +78,6 @@ class Compare extends Component {
     };
 
     showSelectedProducts(){
-        console.log(this.state.myProducts);
         this.setState({
             showMissingProductsModalOpen : true,
             dialogItems : this.state.myProducts,
@@ -87,7 +86,6 @@ class Compare extends Component {
     };
 
     showAllProducts(products){
-        console.log(products);
         this.setState({
             showMissingProductsModalOpen : true,
             dialogItems : products,
@@ -96,8 +94,6 @@ class Compare extends Component {
     };
 
     showMissingProducts(missingProducts){
-        console.log("Show Missing Products");
-        console.log(missingProducts);
         this.setState({
             showMissingProductsModalOpen : true,
             dialogItems : missingProducts,
@@ -120,8 +116,6 @@ class Compare extends Component {
         .then(([products,supermarkets])=>{
             var sprMkt = [];
             var prod = products.res.slice();
-            console.log({toBeCompared});
-            console.log({prod});
             supermarkets.res.map((item) => {
                 var totalAmount = 0;
                 var msng = [];
@@ -161,7 +155,6 @@ class Compare extends Component {
                     available : avail,
                 });
             });
-            console.log({sprMkt});
             sprMkt.sort(function(a, b){return a.total - b.total})
             this.setState({ results : sprMkt , myProducts : prod});
         });
