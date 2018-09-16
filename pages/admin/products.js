@@ -160,8 +160,17 @@ class Products extends Component{
             return;
         }
         this.handleFormClose();
-        console.log({prod});
-        console.log("TODO: add to database");
+        fetch(`${PCP_SERVER}/products/add?productID=${prod.p_id}&productName=${prod.p_name}&productPrice=${prod.p_price}&productAvailability=${prod.p_availability}&supermarketID=${prod.p_supID}&productMatch=${prod.p_match}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.msg=='success'){
+                this.showSnackbar('success','Product Added!');
+                this.refresh();
+            }else{
+                this.showSnackbar('error','An error occurred!');
+                console.log(response.res);
+            }
+        })
     };
 
     updateItem = () => {
@@ -206,8 +215,18 @@ class Products extends Component{
 
     deleteItem = () => {
         this.showSnackbar('info','Deleting item...');
-        console.log("TODO: delete from database");
         this.setState({ confirmationModal: false });
+        fetch(`${PCP_SERVER}/products/delete?productID=${this.state.selectedID}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.msg=='success'){
+                this.showSnackbar('success','Product Deleted!');
+                this.refresh();
+            }else{
+                this.showSnackbar('error','An error occurred!');
+                console.log(response.res);
+            }
+        });
     };
     
 // SNACKBAR OPERATIONS
@@ -283,6 +302,13 @@ class Products extends Component{
         .then(response => response.json())
         .then(json => {
             this.setState({ products : json.res });
+            fetch(`${PCP_SERVER}/products/getCount`)
+            .then(response => response.json())
+            .then(json => {
+                const next = json.res[0].count + 1;
+                this.setState({ id : next});
+                console.log(next);
+            });
         });
     }
 
@@ -305,7 +331,6 @@ class Products extends Component{
     }
 
     refresh(){
-        this.getNextID();
         this.getProducts();
     }
 
@@ -374,7 +399,7 @@ class Products extends Component{
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleConfirmationClose} color="primary">
                             No
                         </Button>
                         <Button onClick={this.deleteItem.bind(this)} color="secondary" autoFocus>
