@@ -59,7 +59,7 @@ const Header = (props) => (
                     {isEmpty(props.user) ? (
                         <Grid item>
                             <Link href="/login" prefetch>
-                                <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>Login/Logout</Button>
+                                <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>Login</Button>
                             </Link>
                         </Grid>
                         ):(
