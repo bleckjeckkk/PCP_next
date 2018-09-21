@@ -59,7 +59,7 @@ class Users extends Component{
         .then(response => response.json())
         .then(response => {
             if(response.msg == 'success'){
-                this.showSnackbar('success','Entry deleted successfully!');
+                this.showSnackbar('success','User deleted successfully!');
                 this.getUsers();
             }else{
                 this.showSnackbar('error','An error occured.');
@@ -107,9 +107,6 @@ class Users extends Component{
     };
 // END SNACKBAR THINGS
 // COMPONENTDIDMOUNT AND THINGS
-    componentDidMount(){
-        this.getUsers();
-    }
 
     getUsers(){
         fetch(`${PCP_SERVER}/users`)
@@ -118,6 +115,19 @@ class Users extends Component{
             console.log(json.res);
             this.setState({ users : json.res });
         });
+    }
+    
+    componentDidMount(){
+        var user = window.sessionStorage.getItem('info');
+        if (user === null){
+            user = { user : {}}
+        }else{
+            user = JSON.parse(user);
+            if(!user.admin){
+                Router.replace('/');
+            }
+        }
+        this.getUsers();
     }
 // END COMPONENTDIDMOUNT AND THINGS
 

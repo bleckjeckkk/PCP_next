@@ -210,6 +210,15 @@ class Supermarkets extends Component{
     }
 
     componentDidMount(){
+        var user = window.sessionStorage.getItem('info');
+        if (user === null){
+            user = { user : {}}
+        }else{
+            user = JSON.parse(user);
+            if(!user.admin){
+                Router.replace('/');
+            }
+        }
         this.refresh();
     }
 

@@ -27,6 +27,15 @@ import {
 import SnackbarWrapper from '../../components/Snackbar'
 import FormWrapper from '../../components/Form'
 import { PCP_SERVER } from '../../res/ImportantThings'
+
+function isEmpty(obj) {
+    for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
+  }
+
 class Products extends Component{
 
     queue = [];
@@ -82,8 +91,18 @@ class Products extends Component{
 
     handleFormOpen = (p) => {
         this.getMatches();
-        this.getNextID();
-        p ? 
+        if(isEmpty(p)){
+            this.getNextID();
+            this.setState({
+                formOpen : true,
+                name : '',
+                price : '',
+                availability : '1',
+                supID : '',
+                match : '0',
+                mode : 'add' 
+            })
+        }else{
             this.setState({
                 formOpen : true,
                 id : p.productID,
@@ -94,16 +113,7 @@ class Products extends Component{
                 match : p.productMatch,
                 mode : 'update'
             })
-        :
-            this.setState({
-                formOpen : true,
-                name : '',
-                price : '',
-                availability : '1',
-                supID : '',
-                match : '0',
-                mode : 'add' 
-            })
+        }
     };
 
     handleFormClose = () => {
@@ -210,7 +220,18 @@ class Products extends Component{
         }
         this.handleFormClose();
         console.log({prod});
-        console.log("TODO: edit product in database");
+        fetch(`http://localhost:4000/products/update?productID=${prod.p_id}&productName=${prod.p_name}&productPrice=${prod.p_price}&productAvailability=${prod.p_availability}&productMatch=${prod.p_match}&supermarketID=${prod.p_supID}`)
+        .then(response => response.json())
+        .then(response => {
+            if(response.msg=='success'){
+                this.showSnackbar('success','Product Updated!');
+                console.log(response.res);
+                this.refresh();
+            }else{
+                this.showSnackbar('error','An error occurred!');
+                console.log(response.res);
+            }
+        })
     };
 
     deleteItem = () => {
@@ -284,7 +305,14 @@ class Products extends Component{
         .then(response => response.json())
         .then(json => {
             if(json.res.length > 0){
-                this.setState({ possibleMatches : json.res });
+                var mtchs = json.res;
+                const noElem = {
+                    p_ID : 0,
+                    p_name : 'no match yet',
+                    p_market : '',
+                }
+                mtchs.unshift(noElem);
+                this.setState({ possibleMatches : mtchs });
             }else{
                 this.setState({ 
                     possibleMatches : [{
@@ -335,6 +363,16 @@ class Products extends Component{
     }
 
     componentDidMount(){
+        var user = window.sessionStorage.getItem('info');
+        if (user === null){
+            user = { user : {}}
+        }else{
+            user = JSON.parse(user);
+            if(!user.admin){
+                Router.replace('/');
+            }
+        }
+        
         this.refresh();
         this.getSupermarkets();
     }
@@ -367,7 +405,7 @@ class Products extends Component{
                                     <TableCell component="th">
                                         {products.productName}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell numeric>
                                         {products.productPrice}
                                     </TableCell>
                                     <TableCell>

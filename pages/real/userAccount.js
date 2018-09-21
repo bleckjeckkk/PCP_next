@@ -42,8 +42,12 @@ class Index extends Component {
     }
 
     componentDidMount(){
-        this.getLatestInfo();
-        this.getMaxID();
+        try{
+            this.getLatestInfo();
+            this.getMaxID();
+        }catch(e){
+            Router.push('/login')
+        }
     }
 
     getLatestInfo(){

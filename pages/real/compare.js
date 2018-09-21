@@ -106,9 +106,19 @@ class Compare extends Component {
         if (user === null){
             user = { user : {}}
         }else{
-            user = JSON.parse(user)
+            user = JSON.parse(user);
+            if(user === {}){
+                user = {
+                    ...user,
+                    user: {
+                        ...user.user,
+                        admin : user.admin,
+                    }
+                }
+            }else{
+                user = { user : {}}
+            }
         }
-
         this.setState({ user });
 
         var toBeCompared = JSON.parse(localStorage.getItem('selectedItems'));

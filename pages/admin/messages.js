@@ -111,6 +111,16 @@ class Messages extends Component{
     }
 
     componentDidMount(){
+        var user = window.sessionStorage.getItem('info');
+        if (user === null){
+            user = { user : {}}
+        }else{
+            user = JSON.parse(user);
+            if(!user.admin){
+                Router.replace('/');
+            }
+        }
+
         this.getFeedbacks();
     }
 
@@ -141,7 +151,7 @@ class Messages extends Component{
                                         {feedback.feedbackContent}
                                     </TableCell>
                                     <TableCell>
-                                        <Button color="secondary" onClick={() => this.handleClickOpen(feedback.feedbackID)}>X</Button>
+                                        <Button color="primary" onClick={() => this.handleClickOpen(feedback.feedbackID)}>DONE</Button>
                                     </TableCell>
                                 </TableRow>
                             )
@@ -154,10 +164,10 @@ class Messages extends Component{
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                     >
-                    <DialogTitle id="alert-dialog-title">{"Delete this message?"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"Done with this message?"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Are you sure you want to delete this message?
+                            Are you sure you are done with this message?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

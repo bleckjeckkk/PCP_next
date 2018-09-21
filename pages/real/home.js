@@ -137,9 +137,20 @@ class Home extends Component {
         if (user === null){
             user = { user : {}}
         }else{
-            user = JSON.parse(user)
+            user = JSON.parse(user);
+            console.log({user});
+            if(user.admin){
+                user = {
+                    ...user,
+                    user: {
+                        ...user.user,
+                        admin : user.admin,
+                    }
+                }
+            }
         }
         this.setState({ user });
+        console.log({user});
         Router.prefetch('/compare');
     }
 

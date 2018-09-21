@@ -63,11 +63,19 @@ const Header = (props) => (
                             </Link>
                         </Grid>
                         ):(
-                        <Grid item>
-                            <Link href="/userAccount" prefetch>
-                                <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>{props.user.userName}</Button>
-                            </Link>
-                        </Grid>
+                            props.user.admin ? (
+                                <Grid item>
+                                    <Link href="/admin/adminHome" prefetch>
+                                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>Admin Menu</Button>
+                                    </Link>
+                                </Grid>
+                            ) : (
+                                <Grid item>
+                                    <Link href="/userAccount" prefetch>
+                                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>{props.user.userName}</Button>
+                                    </Link>
+                                </Grid>
+                            )
                         )
                     }
                 </Grid>
