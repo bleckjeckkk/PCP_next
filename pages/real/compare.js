@@ -107,7 +107,7 @@ class Compare extends Component {
             user = { user : {}}
         }else{
             user = JSON.parse(user);
-            if(user === {}){
+            if(user.admin){
                 user = {
                     ...user,
                     user: {
@@ -115,8 +115,6 @@ class Compare extends Component {
                         admin : user.admin,
                     }
                 }
-            }else{
-                user = { user : {}}
             }
         }
         this.setState({ user });

@@ -13,6 +13,7 @@ import {
     Grid,
     Snackbar,
     IconButton,
+    Tooltip,
 } from '@material-ui/core'
 
 import { PCP_SERVER } from '../../res/ImportantThings'
@@ -280,7 +281,7 @@ class Login extends Component {
                             justify="center"
                             alignItems="center"
                             >
-                            picture of a shopping cart here
+                            <img src="static/shpCart.png" />
                         </Grid>
                     </Grid>
                     <Grid item xs = {6}>

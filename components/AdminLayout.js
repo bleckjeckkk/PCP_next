@@ -15,9 +15,19 @@ const layoutStyle = {
 
 const AdminLayout = (props) => (
   <div style={{ padding : 10 }}>
-  
     <Head>
       <title>PCP Admin {props.page ? `| ${props.page}` : ''}</title>
+      <meta charSet="utf-8" />
+      {/* Use minimum-scale=1 to enable GPU rasterization */}
+      <meta
+        name="viewport"
+        content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+      />
+      {/* PWA primary color */}
+      <link
+        rel="stylesheet"
+        src="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+      />
     </Head>
     <Grid container
           direction="column"

@@ -17,7 +17,7 @@ class About extends Component{
             user = { user : {}}
         }else{
             user = JSON.parse(user);
-            if(user === {}){
+            if(user.admin){
                 user = {
                     ...user,
                     user: {
@@ -25,8 +25,6 @@ class About extends Component{
                         admin : user.admin,
                     }
                 }
-            }else{
-                user = { user : {}}
             }
         }
         this.setState({ user });
