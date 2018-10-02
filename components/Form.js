@@ -33,10 +33,10 @@ class Form extends React.Component{
                     {this.props.children}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.handleFormClose()} color="primary">
+                    <Button onClick={() => this.handleFormClose()} color="primary" id="form-btn-cancel">
                         Cancel
                     </Button>
-                    <Button onClick={() => this.handleAccept()} color="primary">
+                    <Button onClick={() => this.handleAccept()} color="primary" id={`form-btn-acceptAction`}>
                         {acceptText}
                     </Button>
                 </DialogActions>

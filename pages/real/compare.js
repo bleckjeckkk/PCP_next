@@ -194,7 +194,7 @@ class Compare extends Component {
                     </Typography>
                 </Grid>
                 <Grid item md={12}>
-                    <Button onClick={() => this.showSelectedProducts()} variant="outlined" color="primary" style={{backgroundColor : '#299ea7', color : 'white' }}>
+                    <Button id="btn-show-item-list" onClick={() => this.showSelectedProducts()} variant="outlined" color="primary" style={{backgroundColor : '#299ea7', color : 'white' }}>
                         ITEM LIST
                     </Button>
                 </Grid>
@@ -213,7 +213,7 @@ class Compare extends Component {
                                 return (
                                 <TableRow key={row.supermarketID}>
                                     <TableCell component="th" scope="row">
-                                        <Button onClick={() => this.showAllProducts(row.available)}>
+                                        <Button id={`show-supermarket-${row.supermarketID}-list`} onClick={() => this.showAllProducts(row.available)}>
                                             List
                                         </Button>
                                         {`   ${row.supermarketName}`}
@@ -223,7 +223,7 @@ class Compare extends Component {
                                     </TableCell>
                                     <TableCell numeric>
                                         {row.missing.length > 0 ? (
-                                            <Button onClick={() => this.showMissingProducts(row.missing)}>
+                                            <Button id={`show-supermarket-${row.supermarketID}-missing-list`} onClick={() => this.showMissingProducts(row.missing)}>
                                                 <Warning style={{ color: amber[700]}}/>
                                                 {row.missing.length} missing
                                             </Button>
@@ -264,7 +264,7 @@ class Compare extends Component {
                             </Grid>
                             <Grid item>
                                 <Typography style={{ textAlign : 'center' }}>
-                                    <Button variant="outlined" color="primary" style={{backgroundColor : '#299ea7', color : 'white' }}
+                                    <Button id="btn-ok" variant="outlined" color="primary" style={{backgroundColor : '#299ea7', color : 'white' }}
                                         onClick={() => {
                                             this.setState({
                                                 toBeComparedItems : [],

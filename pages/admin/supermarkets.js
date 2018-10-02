@@ -227,7 +227,7 @@ class Supermarkets extends Component{
         return(
             <AdminLayout page="Supermarkets">
                 <Typography variant="display1"> Supermarkets </Typography>
-                <Button onClick={() => this.handleFormOpen()} color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
+                <Button id="btn-add" onClick={() => this.handleFormOpen()} color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>
                     Add
                 </Button>
                 <Table>
@@ -253,9 +253,9 @@ class Supermarkets extends Component{
                                         {sm.supermarketAddress}
                                     </TableCell>
                                     <TableCell>
-                                        <Button color="primary" onClick={() => this.handleFormOpen(sm)}>EDIT</Button>
+                                        <Button id={`btn-edit-${sm.supermarketID}`} color="primary" onClick={() => this.handleFormOpen(sm)}>EDIT</Button>
                                         |
-                                        <Button color="secondary" onClick={() => this.handleClickOpen(sm.supermarketID)}>X</Button>
+                                        <Button id={`btn-del-${sm.supermarketID}`} color="secondary" onClick={() => this.handleClickOpen(sm.supermarketID)}>X</Button>
                                     </TableCell>
                                 </TableRow>
                             )
@@ -277,10 +277,10 @@ class Supermarkets extends Component{
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleConfirmationClose} color="primary">
+                        <Button id="confirm-btn-no" onClick={this.handleConfirmationClose} color="primary">
                             No
                         </Button>
-                        <Button onClick={this.deleteItem.bind(this)} color="secondary" autoFocus>
+                        <Button id="confirm-btn-yes" onClick={this.deleteItem.bind(this)} color="secondary" autoFocus>
                             Yes
                         </Button>
                     </DialogActions>

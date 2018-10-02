@@ -27,10 +27,11 @@ const AdminSidebar = () => (
                 </Link>
                 <Divider />
                 <Link href="/admin/messages" prefetch replace>
-                    <ListItem button divider>
+                    <ListItem button>
                         <ListItemText primary="Messages" />
                     </ListItem>
                 </Link>
+                <Divider />
                 <Link href="/admin/supermarkets" prefetch replace>
                     <ListItem button>
                         <ListItemText primary="Manage Supermarkets" />

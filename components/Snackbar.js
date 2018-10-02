@@ -63,6 +63,7 @@ function MySnackbarContent(props) {
       }
       action={[
         <IconButton
+          id="snackbar-btn-close"
           key="close"
           aria-label="Close"
           color="inherit"

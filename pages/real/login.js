@@ -262,7 +262,7 @@ class Login extends Component {
                                 />
                             </Grid>
                             <Grid item>
-                                    <Button variant="contained" onClick={this.auth.bind(this)}>Login</Button>
+                                    <Button id="login-btn" variant="contained" onClick={this.auth.bind(this)}>Login</Button>
                             </Grid>
                         </Grid>
                     </Paper>
@@ -338,7 +338,7 @@ class Login extends Component {
                                     />
                                 </Grid>
                                 <Grid item>
-                                    <Button variant="contained" onClick={this.signup.bind(this)}>Register</Button>
+                                    <Button id="register-btn" variant="contained" onClick={this.signup.bind(this)}>Register</Button>
                                 </Grid>
                             </Grid>
                         </Paper>

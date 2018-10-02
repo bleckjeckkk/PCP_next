@@ -158,7 +158,7 @@ class Users extends Component{
                                         {usr.lastName}
                                     </TableCell>
                                     <TableCell>
-                                        <Button color="secondary" onClick={() => this.handleClickOpen(usr.userID)}>X</Button>
+                                        <Button id={`btn-del-${usr.userID}`} color="secondary" onClick={() => this.handleClickOpen(usr.userID)}>X</Button>
                                     </TableCell>
                                 </TableRow>
                             )
@@ -178,10 +178,10 @@ class Users extends Component{
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleConfirmationClose} color="primary">
+                        <Button id="confirm-btn-no" onClick={this.handleConfirmationClose} color="primary">
                             No
                         </Button>
-                        <Button onClick={this.deleteItem.bind(this)} color="secondary" autoFocus>
+                        <Button id="confirm-btn-yes" onClick={this.deleteItem.bind(this)} color="secondary" autoFocus>
                             Yes
                         </Button>
                     </DialogActions>

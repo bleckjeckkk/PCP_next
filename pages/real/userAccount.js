@@ -299,10 +299,10 @@ class Index extends Component {
                                             alignItems="center"
                                             style={{ padding : 20 }}
                                         >
-                                            <Button variant="contained" onClick={() => this.handleFormOpen('firstName', this.state.usr.firstName)}>{this.state.usr.firstName}</Button>
-                                            <Button variant="contained" onClick={() => this.handleFormOpen('lastName', this.state.usr.lastName)}>{this.state.usr.lastName}</Button>
-                                            <Button variant="contained" onClick={() => this.handleFormOpen('username', this.state.usr.userName)}>{this.state.usr.userName}</Button>
-                                            <Button variant="contained" color="secondary" onClick={() => this.logout()}> Log Out </Button>
+                                            <Button id="btn-to-edit-fname" variant="contained" onClick={() => this.handleFormOpen('firstName', this.state.usr.firstName)}>{this.state.usr.firstName}</Button>
+                                            <Button id="btn-to-edit-lname" variant="contained" onClick={() => this.handleFormOpen('lastName', this.state.usr.lastName)}>{this.state.usr.lastName}</Button>
+                                            <Button id="btn-to-edit-username" variant="contained" onClick={() => this.handleFormOpen('username', this.state.usr.userName)}>{this.state.usr.userName}</Button>
+                                            <Button id="btn-to-logout" variant="contained" color="secondary" onClick={() => this.logout()}> Log Out </Button>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -347,7 +347,7 @@ class Index extends Component {
                                                                     primary={item.p_name}
                                                                 />
                                                                 <ListItemSecondaryAction>
-                                                                    <Button color="secondary" onClick={() => this.removeFromList(item)}>X</Button>    
+                                                                    <Button id={`btn-remove-${item.p_ID}-from-list`} color="secondary" onClick={() => this.removeFromList(item)}>X</Button>    
                                                                 </ListItemSecondaryAction>
                                                             </ListItem>
                                                         )
@@ -363,7 +363,7 @@ class Index extends Component {
                                             spacing={16}
                                             >
                                             <Grid item>
-                                                <Button variant="contained" 
+                                                <Button id="btn-to-save" variant="contained" 
                                                     disabled={isEmpty(this.state.favItemsParsed)}
                                                     onClick={() => {
                                                         const temp = this.state.favItemsParsed.slice();
@@ -383,7 +383,7 @@ class Index extends Component {
                                                 </Button>
                                             </Grid>
                                             <Grid item>
-                                                <Button variant="contained" 
+                                                <Button id="btn-to-compare" variant="contained" 
                                                     disabled={isEmpty(this.state.favItemsParsed)}
                                                     onClick={() => {
                                                         const temp = this.state.favItemsParsed.slice();
@@ -426,7 +426,7 @@ class Index extends Component {
                                         fullwidth
                                         helperText={`${this.state.feedback.length}/${CHAR_LIMIT}`}
                                     />
-                                    <Button variant="contained" onClick={() => this.sendFeedback()}>SEND FEEDBACK</Button>
+                                    <Button id="btn-to-send-feedback" variant="contained" onClick={() => this.sendFeedback()}>SEND FEEDBACK</Button>
                                 </Grid>
                             </Paper>
                         </Grid>

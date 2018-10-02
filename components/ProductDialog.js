@@ -27,7 +27,7 @@ class ProductDialog extends React.Component {
     };
   
     render() {
-      const { onClose, selectedValue, title, ...other } = this.props;
+      const { onClose, selectedValue, title, showSupermarket, ...other } = this.props;
       return (
         <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
           <DialogTitle id="simple-dialog-title">{isNotEmpty(this.props.items) ? (isNotEmpty(this.props.title) ? `${this.props.title}` : 'Select product') : 'No Product Found!'}</DialogTitle>
@@ -36,13 +36,13 @@ class ProductDialog extends React.Component {
               { isNotEmpty(this.props.items) ? 
                 (
                   this.props.items.map(item => (
-                    <ListItem button onClick={() => this.handleListItemClick(item)} key={item.p_ID}>
+                    <ListItem id={`listitem-${item.p_ID}`} button onClick={() => this.handleListItemClick(item)} key={item.p_ID}>
                       <ListItemAvatar>
                         <Avatar>
                             {item.p_ID}
                         </Avatar>
                       </ListItemAvatar>
-                      {this.props.showSupermarket ? (
+                      {showSupermarket ? (
                         <ListItemText primary={item.p_name} secondary={`Php ${item.p_price} [${item.p_market}]`}/>
                       ) : (
                         <ListItemText primary={item.p_name}/>

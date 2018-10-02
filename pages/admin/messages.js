@@ -151,7 +151,7 @@ class Messages extends Component{
                                         {feedback.feedbackContent}
                                     </TableCell>
                                     <TableCell>
-                                        <Button color="primary" onClick={() => this.handleClickOpen(feedback.feedbackID)}>DONE</Button>
+                                        <Button id={`btn-donewith-${feedback.feedbackID}`}color="primary" onClick={() => this.handleClickOpen(feedback.feedbackID)}>DONE</Button>
                                     </TableCell>
                                 </TableRow>
                             )
@@ -171,10 +171,10 @@ class Messages extends Component{
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleConfirmationClose} color="primary">
+                        <Button id="confirm-btn-no" onClick={this.handleConfirmationClose} color="primary">
                             No
                         </Button>
-                        <Button onClick={this.deleteMessage.bind(this)} color="secondary" autoFocus>
+                        <Button id="confirm-btn-yes" onClick={this.deleteMessage.bind(this)} color="secondary" autoFocus>
                             Yes
                         </Button>
                     </DialogActions>

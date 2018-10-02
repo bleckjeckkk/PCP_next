@@ -27,10 +27,10 @@ const Header = (props) => (
                     alignItems="center"
                     >
                     <Link href="/" prefetch>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>Home</Button>
+                        <Button id="btn-to-home" color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>Home</Button>
                     </Link>
                     <Link href="/about" prefetch>
-                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>About</Button>
+                        <Button id="btn-to-about" color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>About</Button>
                     </Link>
                     {/* <Link href="/admin/adminHome" prefetch>
                         <Button color="inherit" variant='outlined' style={{backgroundColor : '#999999', color : 'white' }}>Admin Home</Button>
@@ -59,20 +59,20 @@ const Header = (props) => (
                     {isEmpty(props.user) ? (
                         <Grid item>
                             <Link href="/login" prefetch>
-                                <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>Login</Button>
+                                <Button id="btn-to-login" color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>Login</Button>
                             </Link>
                         </Grid>
                         ):(
                             props.user.admin ? (
                                 <Grid item>
                                     <Link href="/admin/adminHome" prefetch>
-                                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>Admin Menu</Button>
+                                        <Button id="btn-to-admin" color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>Admin Menu</Button>
                                     </Link>
                                 </Grid>
                             ) : (
                                 <Grid item>
                                     <Link href="/userAccount" prefetch>
-                                        <Button color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>{props.user.userName}</Button>
+                                        <Button id="btn-to-account" color="inherit" variant='outlined' style={{backgroundColor : '#299ea7', color : 'white' }}>{props.user.userName}</Button>
                                     </Link>
                                 </Grid>
                             )

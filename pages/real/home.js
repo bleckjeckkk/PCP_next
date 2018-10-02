@@ -224,7 +224,7 @@ class Home extends Component {
                                 />
                             </Grid>
                             <Grid item md = {1}>
-                                <Button variant="contained" onClick={() => this.handleClickOpen()}>Search</Button>
+                                <Button id="btn-search" variant="contained" onClick={() => this.handleClickOpen()}>Search</Button>
                             </Grid>
                             <Grid item md = {2}>
                             </Grid>
@@ -262,7 +262,7 @@ class Home extends Component {
                                                         primary={item.p_name}
                                                     />
                                                     <ListItemSecondaryAction>
-                                                        <Button color="secondary" onClick={() => this.removeFromList(item)}>X</Button>    
+                                                        <Button id={`btn-remove-${item.p_ID}-from-list`} color="secondary" onClick={() => this.removeFromList(item)}>X</Button>    
                                                     </ListItemSecondaryAction>
                                                     </ListItem>
                                                 )
@@ -282,7 +282,7 @@ class Home extends Component {
                                     spacing={16}
                                     >
                                     <Grid item>
-                                        <Button color="primary" variant="contained" 
+                                        <Button id="btn-compare" color="primary" variant="contained" 
                                             onClick={() => {
                                                 this.saveListLocal();
                                                 Router.push('/compare');
@@ -295,14 +295,14 @@ class Home extends Component {
                                             <div>
                                                 <Tooltip disableFocusListener disableTouchListener title="You need to be logged in to use this feature"> 
                                                     <span>
-                                                        <Button disabled color="primary" variant="contained">
+                                                        <Button id="btn-save-unregistered" disabled color="primary" variant="contained">
                                                             SAVE
                                                         </Button>
                                                     </span>
                                                 </Tooltip>
                                             </div>
                                             ) : (
-                                                <Button color="primary" variant="contained" onClick={() => this.saveList()}>SAVE</Button>
+                                                <Button id="btn-save" color="primary" variant="contained" onClick={() => this.saveList()}>SAVE</Button>
                                             )
                                         }
                                     </Grid>
