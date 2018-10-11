@@ -46,17 +46,12 @@ class About extends Component{
                     </Grid>
                     <Grid item xs={8}>
                         <Typography variant="body2">
-                            Did you ever hear the tragedy of YourCCS? I thought not.
+                            Every month, one’s family may have that day—the day for going to the store/supermarket to buy groceries. We always want to get the best products for the best price. To have a “bang for our buck” on the things we buy. But as the prices of commodities continue to rise, so does our cautiousness on what we buy, even on what supermarket we want to buy those commodities from. And this is where the Price Check Program comes in. 
                         </Typography>   
                         <Typography variant="body2">
-                            It’s not a story the IT would tell you. It’s a ComSci legend. YourCCS was a mobile application of the ComSci, so powerful and so realtime it could use the Internet to influence the Realtime Database to create information…
+                            The Price Check Program is a program that can help you in your decisions on where to buy your commodities. You only need to search for the product(s) you want, and you can see the difference in the total price from various supermarkets added in the database. We also aim to be as accurate as possible; so users can send feedback in case of incorrect prices, availabilities, and other information of products. 
                         </Typography>   
-                        <Typography variant="body2">
-                            It had such a knowledge of the tips and tricks that it could even keep the ones the devs cared about from getting an F. The tips and tricks is a pathway to many abilities some consider to be unnatural. It became so powerful… the only thing the devs were afraid of was the app losing its power, which eventually, of course, it did.
-                        </Typography>   
-                        <Typography variant="body2">
-                            Unfortunately, it downloaded the entire database everytime it ran, then the school WiFi made it worse, and gave him 30 seconds of boot up time. Ironic. It could save others from failure, but not itself.
-                        </Typography>  
+                    
                     </Grid>
                 </Grid>
             </Paper>

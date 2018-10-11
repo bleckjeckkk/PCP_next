@@ -81,6 +81,7 @@ class Supermarkets extends Component{
 // CRUD OPERATIONS
     addSupermarket = () => {
         this.getNextID();
+        this.handleFormClose();
         this.showSnackbar('info','Adding entry...');
         const market = {
             id : this.state.id,
@@ -99,9 +100,6 @@ class Supermarkets extends Component{
             }
         })
 
-
-        this.handleFormClose();
-        this.setState({ id : '' , name : '' , address : '' });
         this.refresh();
     }
 
@@ -130,7 +128,7 @@ class Supermarkets extends Component{
     }
 
     deleteItem = () => {
-        this.showSnackbar('info',`Deleting entry...${this.state.selectedID}`);
+        this.showSnackbar('info',`Deleting entry...`);
         this.setState({ confirmationModal: false });
         const market = { id : this.state.selectedID };
 
@@ -139,13 +137,12 @@ class Supermarkets extends Component{
         .then(response => {
             if(response.msg == 'success'){
                 this.showSnackbar('success','Entry deleted!');
+                this.refresh();
             }else{
                 this.showSnackbar('error','An error occured. Please try again.');
                 console.error(response.res);
             }
         })
-
-        this.refresh();
     };
 // SNACKBAR OPERATIONS
     showSnackbar(mode, message){

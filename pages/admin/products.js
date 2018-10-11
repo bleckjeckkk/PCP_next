@@ -508,7 +508,7 @@ class Products extends Component{
                         },this)}
                     </Select>
                     <br />
-                    <TextField
+                    {/* <TextField
                         error={this.state.matchMissing}
                         margin="dense"
                         id="match"
@@ -517,7 +517,7 @@ class Products extends Component{
                         onChange={this.onChange.bind(this)}
                         value={this.state.match}
                     />
-                    <br />
+                    <br /> */}
                     <InputLabel>Match</InputLabel>
                     <Select
                         onClick={()=> {this.getMatches()}}
