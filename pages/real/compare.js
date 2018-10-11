@@ -99,7 +99,6 @@ class Compare extends Component {
             dialogItems : missingProducts,
             dialogTitle : 'Missing Items'
         });
-        console.log(missingProducts)
     }
 
     componentDidMount(){
