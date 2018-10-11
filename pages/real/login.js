@@ -274,7 +274,7 @@ class Login extends Component {
                     justify="space-between"
                     alignItems="center"
                     style={{ padding : 20 }}>
-                    <Grid item xs = {6}>
+                    <Grid item xs = {12} md={6}>
                         <Grid
                             container
                             direction="column"
@@ -284,7 +284,7 @@ class Login extends Component {
                             <img src="static/shpCart.png" />
                         </Grid>
                     </Grid>
-                    <Grid item xs = {6}>
+                    <Grid item xs = {12} md= {6}>
                         <Paper style={{padding : 20, backgroundColor : `rgba(255,255,255,0.8)`}}>
                             <Grid
                                 container

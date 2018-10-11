@@ -99,6 +99,7 @@ class Compare extends Component {
             dialogItems : missingProducts,
             dialogTitle : 'Missing Items'
         });
+        console.log(missingProducts)
     }
 
     componentDidMount(){
@@ -147,9 +148,11 @@ class Compare extends Component {
                         avail.push(p);
                     }else{
                         const missing = product.matched_marketID == item.supermarketID;
+                        const oos = !product.p_availability
                         const p = {
                             p_ID: product.p_ID,
-                            p_name: `${missing ? (`[Not available] ${product.p_name}`) :(product.p_name) }`,
+                            // p_name: `${missing ? (`[Not available/ Out of stock] ${product.p_name}`) :(product.p_name) }`,
+                            p_name: `${missing ? '[Not available]' : ''}${oos? '[Out of stock]' : ''} ${product.p_name}`,
                             p_price : product.p_price,
                         };
                         msng.push(p);

@@ -291,7 +291,7 @@ class Home extends Component {
                                         </Button>
                                     </Grid>
                                     <Grid item>
-                                        {isEmpty(this.state.user) ? (
+                                        {isEmpty(this.state.user.user) ? (
                                             <div>
                                                 <Tooltip disableFocusListener disableTouchListener title="You need to be logged in to use this feature"> 
                                                     <span>
